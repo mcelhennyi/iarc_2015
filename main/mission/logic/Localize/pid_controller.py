@@ -1,7 +1,7 @@
-import time
+#import time
 import rospy
-import numpy as np
-import matplotlib.pyplot as pp
+#import numpy as np
+#import matplotlib.pyplot as pp
 
 
 class PIDController:
@@ -67,7 +67,7 @@ class PIDController:
         self.old_time = current_time  # Sets the old time to the current time after calling the previous functions
         # self.count += 1
         # Creates the acceleration output array in the XYZ directions
-        array = [self.output_x, self.output_y, self.output_z]
+        array = [- self.output_x, - self.output_y, self.output_z]  # Negative sign to invert distance to make it move in the correct direction
         # # graph
         # if self.count < 300:
         #     self.arrayx[self.count] = array[0]
