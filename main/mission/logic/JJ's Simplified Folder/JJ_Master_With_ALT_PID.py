@@ -53,7 +53,7 @@ class Master():
         # sets the rate of the loop
         rate = rospy.Rate(10)
         # goal altitude
-        altitude_goal = input('what altitude should I hover at?')
+        #altitude_goal = input('what altitude should I hover at?')
         self.altitude_current = 0
 
         # state variable
@@ -153,7 +153,7 @@ class Master():
             if not stance == 3: # If were not landing, this works
             # set the verticle speed
 
-                z_linear = altitude_PID(self.altitude_current, altitude_goal)
+                z_linear = altitude_PID.run(self.altitude_current, altitude_goal)
 
             # need to do this for x_linear, y_linear, and possibly x,y, and z ang
 

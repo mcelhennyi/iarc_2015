@@ -8,6 +8,9 @@ from std_msgs.msg import Header
 import math
 from std_msgs.msg import Float64
 
+# Edited on Dec 1 2016 by JJ
+# fixed altitude not being a float issue
+
 
 class CircleDetect():
 
@@ -101,7 +104,7 @@ class CircleDetect():
         self.cap.release()
 
     def callback(self, altitude):
-        self.alt = altitude
+        self.alt = float(altitude)
 
 if __name__ == '__main__':
     # Initiate the node
