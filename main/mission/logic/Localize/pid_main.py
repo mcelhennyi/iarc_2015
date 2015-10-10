@@ -15,7 +15,7 @@ class PIDMain():
         self.accel_vector = Vector3Stamped()
         self.xyz_roomba = Vector3Stamped()
         # Create object of PID Controller with tunning arguments
-        self.pid_methods = pid_controller.PIDController(KP=1, KI=1, KD=1)  # PID contants P, I, D
+        self.pid_methods = pid_controller.PIDController(KP=10, KI=0, KD=0)  # PID contants P, I, D
         # runs the loop function
         self.loop_roomba_location()  # Runs roomba subscriber
 
@@ -23,15 +23,16 @@ class PIDMain():
         # while the node is still running loop
         while not rospy.is_shutdown():
             # create and subscribe to the message /roomba/location
-            rospy.Subscriber("/roomba/location", Vector3Stamped, callback="get_accel_pub",
-                             callback_args=self.xyz_roomba)
+            self.subscriber = rospy.Subscriber("/roomba/location", Vector3Stamped, self.callback)
             # publish the accel vector to mavros
             self.pub.publish(self.accel_vector)  # Vector3Stamped type variable
+
             # sleep the ros rate
             self.rate.sleep()
+        # rospy.spin()
 
     # runs every time the subcriber above runs
-    def get_accel_pub(self, xyz_roomba):
+    def callback(self, xyz_roomba):
         # Method calls that send the XYZ location of the roomba and return xyz acceleration
         self.accel_vector.vector.x = \
             self.pid_methods.get_output(xyz_roomba.vector.x, xyz_roomba.vector.y, xyz_roomba.vector.z)[0]

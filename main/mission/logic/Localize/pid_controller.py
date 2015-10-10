@@ -1,4 +1,7 @@
 import time
+import rospy
+import numpy as np
+import matplotlib.pyplot as pp
 
 
 class PIDController:
@@ -17,6 +20,8 @@ class PIDController:
         self.integral_x = 0
         self.integral_y = 0
         self.integral_z = 0
+        # self.count = 0
+        # self.arrayx = np.arange(0, 300)
 
     # PID correction in the X direction
     def pid_x(self, error_x, dt):
@@ -53,13 +58,24 @@ class PIDController:
 
     # Takes the XYZ distances from the target location and returns the acceleration vector with the XYZ directions
     def get_output(self, error_x=0, error_y=0, error_z=0):
-        current_time = int(round(time.time() * 1000))  # Gets the current time
+        current_time = rospy.get_time() # Gets the current time
         dt = current_time - self.old_time  # Gets the difference in current time and old time
         if self.old_time != 0:
             self.pid_x(error_x, dt)
             self.pid_y(error_y, dt)
             self.pid_z(error_z, dt)
         self.old_time = current_time  # Sets the old time to the current time after calling the previous functions
+        # self.count += 1
         # Creates the acceleration output array in the XYZ directions
         array = [self.output_x, self.output_y, self.output_z]
+        # # graph
+        # if self.count < 300:
+        #     self.arrayx[self.count] = array[0]
+        #
+        # if self.count == 300:
+        #     # plot
+        #     pp.plot(self.arrayx)
+        #     pp.title('Acceleration')
+        #     pp.show()
+
         return array
