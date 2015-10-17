@@ -1,52 +1,81 @@
-#!/usr/bin/env python
+import time
 import rospy
-from geometry_msgs.msg import Vector3Stamped
-import pid_controller
+import numpy as np
+import matplotlib.pyplot as pp
 
 
-class PID_main():
+class PIDController:
 
-    def __init__(self):
-        # Create a publisher for acceleration data
-        self.pub = rospy.Publisher('/mavros/setpoint/accel', Vector3Stamped, queue_size=10)
-        # set the rate of ros loop
-        self.rate = rospy.Rate(10)  # 10hz
-        # Create variable for use
-        self.accel_vector = Vector3Stamped()
-        self.xyz_roomba = Vector3Stamped()
-        # Create object of PID Controller with tunning arguments
-        self.pid_methods = pid_controller.PIDController(KP=1, KI=1, KD=1)  # PID contants P, I, D
-        # runs the loop function
-        self.loop_roomba_location()  # Runs roomba subscriber
+    def __init__(self, KP=0, KI=0, KD=0):
+        self.KP = KP
+        self.KI = KI
+        self.KD = KD
+        self.output_x = 0
+        self.output_y = 0
+        self.output_z = 0
+        self.old_time = 0
+        self.previous_error_x = 0
+        self.previous_error_y = 0
+        self.previous_error_z = 0
+        self.integral_x = 0
+        self.integral_y = 0
+        self.integral_z = 0
+        # self.count = 0
+        # self.arrayx = np.arange(0, 300)
 
-    def loop_roomba_location(self):
-        # while the node is still running loop
-        while not rospy.is_shutdown():
-            # create and subscribe to the message /roomba/location
-            rospy.Subscriber("/roomba/location", Vector3Stamped, callback="get_accel_pub",
-                             callback_args=self.xyz_roomba)
-            # publish the accel vector to mavros
-            self.pub.publish(self.accel_vector)  # Vector3Stamped type variable
-            # sleep the ros rate
-            self.rate.sleep()
+    # PID correction in the X direction
+    def pid_x(self, error_x, dt):
+        # Sets the X integral
+        self.integral_x += error_x*dt
+        # Sets the X derivative
+        derivative_x = (error_x - self.previous_error_x)/dt
+        # Adjusts the X output by the constants KP, KI, and KD
+        self.output_x = self.KP*error_x + self.KI*self.integral_x + self.KD*derivative_x
+        # Sets the previous error for X
+        self.previous_error_x = error_x
 
-    # runs every time the subcriber above runs
-    def get_accel_pub(self, xyz_roomba):
-        # Method calls that send the XYZ location of the roomba and return xyz acceleration
-        self.accel_vector.vector.x = \
-            self.pid_methods.get_output(xyz_roomba.vector.x, xyz_roomba.vector.y, xyz_roomba.vector.z)[0]
-        self.accel_vector.vector.y = \
-            self.pid_methods.get_output()[1]
-        self.accel_vector.vector.z = \
-            self.pid_methods.get_output()[2]
-        # logs the xyz accel data
-        rospy.loginfo(self.accel_vector)
+    # PID correction in the Y direction
+    def pid_y(self, error_y, dt):
+        # Sets the Y integral
+        self.integral_y += error_y*dt
+        # Sets the Y derivative
+        derivative_y = (error_y - self.previous_error_y)/dt
+        # Adjusts the Y output by the constants KP, KI, and KD
+        self.output_y = self.KP*error_y + self.KI*self.integral_y + self.KD*derivative_y
+        # Sets the previous error for Y
+        self.previous_error_y = error_y
 
+    # PID correction in the Z direction
+    def pid_z(self, error_z, dt):
+        # Sets the Z integral
+        self.integral_z += error_z*dt
+        # Sets the Z derivative
+        derivative_z = (error_z - self.previous_error_z)/dt
+        # Adjusts the Z output by the constants KP, KI, and KD
+        self.output_z = self.KP*error_z + self.KI*self.integral_z + self.KD*derivative_z
+        # Sets the previous error for Z
+        self.previous_error_z = error_z
 
-if __name__ == '__main__':
-     # Initiate the node
-    rospy.init_node('PID_main', anonymous=True)
-    try:
-        pid = PID_main()
-    except rospy.ROSInterruptException:
-        pass
+    # Takes the XYZ distances from the target location and returns the acceleration vector with the XYZ directions
+    def get_output(self, error_x=0, error_y=0, error_z=0):
+        current_time = rospy.get_time() # Gets the current time
+        dt = current_time - self.old_time  # Gets the difference in current time and old time
+        if self.old_time != 0:
+            self.pid_x(error_x, dt)
+            self.pid_y(error_y, dt)
+            self.pid_z(error_z, dt)
+        self.old_time = current_time  # Sets the old time to the current time after calling the previous functions
+        # self.count += 1
+        # Creates the acceleration output array in the XYZ directions
+        array = [self.output_x, self.output_y, self.output_z]
+        # # graph
+        # if self.count < 300:
+        #     self.arrayx[self.count] = array[0]
+        #
+        # if self.count == 300:
+        #     # plot
+        #     pp.plot(self.arrayx)
+        #     pp.title('Acceleration')
+        #     pp.show()
+
+        return array
