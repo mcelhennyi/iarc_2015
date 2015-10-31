@@ -14,7 +14,7 @@ class CircleDetect():
 
         self.location_new = Vector3Stamped()
         self.location_old = Vector3Stamped()
-        self.cap = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture(-1)
         self.loop_search()
 
     def loop_search(self):
