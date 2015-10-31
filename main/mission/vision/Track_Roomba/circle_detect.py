@@ -27,22 +27,22 @@ class CircleDetect():
             #gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             output = img.copy()
 
-			# Gaussian Blur
+            # Gaussian Blur
             gaussian_blur = cv2.GaussianBlur(img, (9,9), 0)
 
             # detect circles in the image
-            circles = cv2.HoughCircles(gaussian_blur, cv2.cv.CV_HOUGH_GRADIENT, 3, 100, 
-					minRadius=170, maxRadius=180)
-			#####This is opencv 2.4.8
+            circles = cv2.HoughCircles(gaussian_blur, cv2.cv.CV_HOUGH_GRADIENT, 3, 100,
+                    minRadius=170, maxRadius=180)
+            #####This is opencv 2.4.8
             if circles is not None:
-				circles = np.round(circles[0, :]).astype("int")
+                circles = np.round(circles[0, :]).astype("int")
             for (x, y, r) in circles:
-				cv2.circle(output, (x, y), r, (0, 255, 0), 4)
-				cv2.rectangle(output, (x-5, y-5), (x+5, y+5), (0, 128, 255), -1)
-				self.location_new.vector.x = x
-				self.location_new.vector.y = y
-				self.location_new.vector.z = 0
-	    #######This is opencv 3.0
+                cv2.circle(output, (x, y), r, (0, 255, 0), 4)
+                cv2.rectangle(output, (x-5, y-5), (x+5, y+5), (0, 128, 255), -1)
+                self.location_new.vector.x = x
+                self.location_new.vector.y = y
+                self.location_new.vector.z = 0
+            #######This is opencv 3.0
             ## ensure at least some circles were found
             #if circles is not None:
                 ## convert the (x, y) coordinates and radius of the circles to integers
