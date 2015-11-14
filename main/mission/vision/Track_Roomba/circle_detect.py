@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import rospy
 from geometry_msgs.msg import Vector3Stamped
-
+import math
 
 class CircleDetect():
 
@@ -12,7 +12,11 @@ class CircleDetect():
         self.pub = rospy.Publisher('/roomba/location/pixel', Vector3Stamped,
             queue_size=10)
         self.rate = rospy.Rate(10)  # 10hz
-
+        # For finding radius
+        self.a = 391.3
+        self.b = -0.0238
+        self.radius = 0
+        self.alt = 32  # NEEDS TO CHANGE FROM HARD CODE TO SUBSCRIPTION
         self.location_new = Vector3Stamped()
         self.location_old = Vector3Stamped()
         self.cap = cv2.VideoCapture(0)
@@ -29,9 +33,12 @@ class CircleDetect():
             # Gaussian Blur
             gaussian_blur = cv2.GaussianBlur(gray, (9, 9), 0)
 
+            # Get the radius range based off of altitude (exponential fit)
+            self.radius = int(self.a * math.exp(self.alt * self.b))
+
             # detect circles in the image
             circles = cv2.HoughCircles(gaussian_blur, cv2.cv.CV_HOUGH_GRADIENT,
-                3, 100, minRadius=170, maxRadius=180)
+                3, 100, minRadius=self.radius - 5, maxRadius=self.radius + 5)
 
             # ensure at least some circles were found
             if circles is not None:
@@ -44,6 +51,7 @@ class CircleDetect():
                     self.location_new.vector.x = x
                     self.location_new.vector.y = y
                     self.location_new.vector.z = 0
+                    print r
 
             #########################
             # show the output image #
@@ -58,7 +66,7 @@ class CircleDetect():
             ##############################Publisher########################
             ###############################################################
             self.pub.publish(self.location_new)  # Vector3Stamped type variable
-            rospy.loginfo(self.location_new)
+            #rospy.loginfo(self.location_new)
             self.rate.sleep()
 
 
