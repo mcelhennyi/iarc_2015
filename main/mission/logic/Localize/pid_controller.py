@@ -7,21 +7,24 @@ import matplotlib.pyplot as pp
 class PIDController:
 
     def __init__(self, KP=0, KI=0, KD=0):
+        #
         self.KP = KP
         self.KI = KI
         self.KD = KD
+        #
         self.output_x = 0
         self.output_y = 0
         self.output_z = 0
+        #
         self.old_time = 0
+        #
         self.previous_error_x = 0
         self.previous_error_y = 0
         self.previous_error_z = 0
+        #
         self.integral_x = 0
         self.integral_y = 0
         self.integral_z = 0
-        # self.count = 0
-        # self.arrayx = np.arange(0, 300)
 
     # PID correction in the X direction
     def pid_x(self, error_x, dt):
