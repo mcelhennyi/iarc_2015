@@ -68,14 +68,5 @@ class PIDController:
         # self.count += 1
         # Creates the acceleration output array in the XYZ directions
         array = [self.output_x, self.output_y, self.output_z]
-        # # graph
-        # if self.count < 300:
-        #     self.arrayx[self.count] = array[0]
-        #
-        # if self.count == 300:
-        #     # plot
-        #     pp.plot(self.arrayx)
-        #     pp.title('Acceleration')
-        #     pp.show()
 
         return array
