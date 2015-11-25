@@ -8,10 +8,10 @@ from geometry_msgs.msg import Vector3Stamped
     # can change the location when it is not looking at a target.
 # 3.During take off and landing the X and Y needs to do nothing.
 # Need to publish the error for the PID stuff
+# 5.Figure out when we need to land
 
 # Still needs to be fixed
 # don't worry about this one now. 4.Subscribe to something to tell this if there is an obstacle in the way
-# 5.Figure out when we need to land
 # Need to subscribe to the roomba location
 # Need to subscribe to the altitude
 
@@ -40,8 +40,11 @@ class TakeOffRoombaPrioritize:
         self.at_target_location = 0  # 1. need to produce this
         self.look_for_roomba = 0
 
+        # flight mission variables
+        self.mission_state = 0
+        self.need_to_land = 0  # 5.
+
         # self.obstacle_in_the_way = 0  # 4. Subscribe to this?
-        self.need_to_land = 0  # 5. calculate here?
 
         self.main()  # Runs the main def
 
@@ -50,9 +53,9 @@ class TakeOffRoombaPrioritize:
         while not rospy.is_shutdown():
             if self.state == 1:
                 self.take_off()
-            if self.state == 2:
-                self.loop_roomba_prioritize()
-            if self.state == 3:
+            elif self.state == 2:
+                self.flying_mission()
+            elif self.state == 3:
                 self.land()
 
             # subscribe to altitude
@@ -80,9 +83,23 @@ class TakeOffRoombaPrioritize:
         if self.at_target_location == 1:
             self.state = 2  # moves to the flying state
 
-    def loop_roomba_prioritize(self):
+    def flying_mission(self):
         self.look_for_roomba = 1  # Look for roomba
-        # Needs to choose what roomba to localize on when seeing more than one
+
+        # if we are hovering above the roomba
+        if self.at_target_location == 1:
+
+            if self.mission_state == 0:
+                self.mission_state = 1  # Change mission state to next state
+                self.setpoint_z = 1  # Move down
+
+            elif self.mission_state == 1:
+                self.mission_state = 2  # Change mission state to next state
+                self.setpoint_z = 2  # Move up
+
+            elif self.mission_state == 2:
+                # self.mission_state = 3  # Change mission state to next state
+                self.need_to_land = 1  # land
 
         # Need something like this to tell it to land
         if self.need_to_land == 1:
@@ -111,7 +128,7 @@ class TakeOffRoombaPrioritize:
     #     # 1.When the altitude is adjusted to miss the obstacle need to go back to looking for roombas
     #     # 1.if altitude is good
     #     if self.at_target_location == 1:
-    #         self.loop_roomba_prioritize()
+    #         go back to flying
 
 #######################################################################################################################
     # Subscribe to the distance from an object
@@ -123,12 +140,12 @@ class TakeOffRoombaPrioritize:
         self.measured_value_z = z_altitude.vector.z  # probably need to change this, but basic idea
 
     # Subscribes to roomba location and chooses if we are looking for a roomba or not
+    # Need to later decide which roomba to focus on if there is more than one in sight
     def xy_location_control(self, xy_roomba):
         if self.look_for_roomba == 1:
             self.measured_value_x = xy_roomba.vector.x
             self.measured_value_y = xy_roomba.vector.y
-        else:
-            if self.look_for_roomba == 0:
+        elif self.look_for_roomba == 0:
                 self.measured_value_x = 0
                 self.measured_value_y = 0
 
@@ -164,5 +181,3 @@ if __name__ == '__main__':
         master = TakeOffRoombaPrioritize()
     except rospy.ROSInterruptException:
         pass
-
-
