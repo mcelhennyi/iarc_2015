@@ -1,5 +1,7 @@
+#!/usr/bin/env python
 import rospy
 from geometry_msgs.msg import Vector3Stamped
+from mavros_msgs.msgs import SetMode
 
 # Taken care of now
 # 1.Need to know when the quad is siting still over its current target(physical roomba or location we tell it),
@@ -21,7 +23,15 @@ class TakeOffRoombaPrioritize:
 
     def __init__(self):
         # Create a publisher for acceleration data
-        self.pub = rospy.Publisher('/master/control/error', Vector3Stamped, queue_size=10)
+        self.pub = rospy.Publisher("/master/control/error", Vector3Stamped, queue_size=10)
+
+        # Sets up service and initialize mode
+        rospy.wait_for_service('mavros/set_mode')
+        self.set_mode_serv = rospy.ServiceProxy('mavros/set_mode', SetMode)  # creates service for setting mode
+        self.off_board_mode = SetMode()  # Creates SetMode object for service
+        self.off_board_mode.custom_mode = "OFFBOARD"  # Sets mode to off board control
+        self.nav_guided_serv = rospy.ServiceProxy('/mavros/cmd/guided_enable', CommandBool)
+
         # Create variable for use
         self.error_vector = Vector3Stamped()
 
@@ -36,7 +46,7 @@ class TakeOffRoombaPrioritize:
 
         self.rate = rospy.Rate(10)  # 10hz
 
-        self.state = 1  # starts in the take off state
+        self.state = 0  # starts in the take off state
         self.at_target_location = 0  # 1. need to produce this
         self.look_for_roomba = 0
 
@@ -51,6 +61,8 @@ class TakeOffRoombaPrioritize:
 ######################################################################################################################
     def main(self):
         while not rospy.is_shutdown():
+            if self.state == 0:
+                self.initialize()
             if self.state == 1:
                 self.take_off()
             elif self.state == 2:
@@ -71,6 +83,31 @@ class TakeOffRoombaPrioritize:
             self.rate.sleep()  # sleep the ros rate
 
 ######################################################################################################################
+    def initialize(self):
+        # This State takes care of setting up the PX4 to be in the correct
+        # operational mode. It sets the px4 for off board control
+        try_again_off = True
+        try_again_nav = True
+        not_done = True
+
+        while(not_done):
+            while(try_again):
+                if self.set_mode_serv.call(self.off_board_mode)==True:
+                    rospy.loginfo("OffBoard Mode enabled")
+                    try_again_off = False
+                else:
+                    rospy.loginfo("OffBoard Mode NOT enabled")
+                    try_again_off = True
+            while(try_again_nav):
+                if self.set_mode_serv.call(self.off_board_mode)==True:
+                    rospy.loginfo("OffBoard Mode enabled")
+                    try_again_nav = False
+                else:
+                    rospy.loginfo("OffBoard Mode NOT enabled")
+                    try_again_nav = True
+
+
+
     def take_off(self):
         # 2.This makes PID Z localize on 2 instead of 0
         self.setpoint_z = 2
