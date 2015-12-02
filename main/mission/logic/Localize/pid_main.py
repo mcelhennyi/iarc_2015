@@ -14,6 +14,7 @@ class PIDMain():
         # Create variable for use
         self.accel_vector = Vector3Stamped()
         self.xyz_roomba = Vector3Stamped()
+        self.temp_accel_vector = [0.0, 0.0, 0.0]
         # Create object of PID Controller with tunning arguments
         self.pid_methods = pid_controller.PIDController(KP=10, KI=0, KD=0)  # PID contants P, I, D
         # runs the loop function
@@ -34,12 +35,11 @@ class PIDMain():
     # runs every time the subcriber above runs
     def callback(self, xyz_roomba):
         # Method calls that send the XYZ location of the roomba and return xyz acceleration
-        self.accel_vector.vector.x = \
-            self.pid_methods.get_output(xyz_roomba.vector.x, xyz_roomba.vector.y, xyz_roomba.vector.z)[0]
-        self.accel_vector.vector.y = \
-            self.pid_methods.get_output(xyz_roomba.vector.x, xyz_roomba.vector.y, xyz_roomba.vector.z)[1]
-        self.accel_vector.vector.z = \
-            self.pid_methods.get_output(xyz_roomba.vector.x, xyz_roomba.vector.y, xyz_roomba.vector.z)[2]
+        self.temp_accel_vector = self.pid_methods.get_output(xyz_roomba.vector.x, xyz_roomba.vector.y, xyz_roomba.vector.z)
+
+        self.accel_vector.vector.x = self.temp_accel_vector[0]
+        self.accel_vector.vector.y = self.temp_accel_vector[1]
+        self.accel_vector.vector.z = self.temp_accel_vector[2]
         # logs the xyz accel data
         rospy.loginfo(self.accel_vector)
 
@@ -51,3 +51,6 @@ if __name__ == '__main__':
         pid = PIDMain()
     except rospy.ROSInterruptException:
         pass
+
+# TO find the length on the ground in meters
+    # (height in meters times the distance in pixels)/720

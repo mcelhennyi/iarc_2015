@@ -4,19 +4,22 @@ import numpy as np
 import rospy
 from geometry_msgs.msg import Vector3Stamped
 import math
+from std_msgs.msg import Float64
+
 
 class CircleDetect():
 
     def __init__(self):
         # Create a publisher for acceleration data
-        self.pub = rospy.Publisher('/roomba/location/pixel', Vector3Stamped,
+        self.pub = rospy.Publisher('/roomba/location_meters', Vector3Stamped,
             queue_size=10)
         self.rate = rospy.Rate(10)  # 10hz
         # For finding radius
         self.a = 391.3
-        self.b = -0.0238
+        self.b = -0.9371
         self.radius = 0
-        self.alt = 32  # NEEDS TO CHANGE FROM HARD CODE TO SUBSCRIPTION
+        # Altitude
+        self.alt = 0.8128 # 32 inches ~ as high as the countertop  # NEEDS TO CHANGE FROM HARD CODE TO SUBSCRIPTION
         self.location_new = Vector3Stamped()
         self.location_old = Vector3Stamped()
         self.cap = cv2.VideoCapture(0)
@@ -24,6 +27,9 @@ class CircleDetect():
 
     def loop_search(self):
         while not rospy.is_shutdown():
+            # Uncomment for actual flight to find altitude
+            #rospy.Subscriber("/mavros/global_position/rel_alt", Float64, self.callback)
+
             # read frame from capture
             ret, img = self.cap.read()
 
@@ -48,10 +54,11 @@ class CircleDetect():
                     cv2.circle(output, (x, y), r, (0, 255, 0), 4)
                     cv2.rectangle(output, (x - 5, y - 5), (x + 5, y + 5),
                         (0, 128, 255), -1)
-                    self.location_new.vector.x = x
-                    self.location_new.vector.y = y
+                    # TO find the length on the ground in meters
+                    # (height in meters times the distance in pixels)/720
+                    self.location_new.vector.x = ((x-320) * self.alt)/720
+                    self.location_new.vector.y = ((240 - y) * self.alt)/720
                     self.location_new.vector.z = 0
-                    print r
 
             #########################
             # show the output image #
@@ -66,13 +73,17 @@ class CircleDetect():
             ##############################Publisher########################
             ###############################################################
             self.pub.publish(self.location_new)  # Vector3Stamped type variable
-            #rospy.loginfo(self.location_new)
+            rospy.loginfo(self.location_new)
+            #self.rospy.spin()
             self.rate.sleep()
 
 
         cv2.destroyAllWindows()
         self.cap.release()
 
+
+    def callback(self, altitude):
+        self.alt = altitude
 
 if __name__ == '__main__':
     # Initiate the node
