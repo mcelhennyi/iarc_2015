@@ -4,7 +4,7 @@ import numpy as np
 import rospy
 from geometry_msgs.msg import Vector3Stamped
 import math
-from std_msgs.msg import Float64
+#from std_msgs.msg import Float64
 
 
 class CircleDetect():
@@ -56,8 +56,8 @@ class CircleDetect():
                         (0, 128, 255), -1)
                     # TO find the length on the ground in meters
                     # (height in meters times the distance in pixels)/720
-                    self.location_new.vector.x = ((x-320) * self.alt)/720
-                    self.location_new.vector.y = ((240 - y) * self.alt)/720
+                    self.location_new.vector.x = ((x - 320) * self.alt) / 720
+                    self.location_new.vector.y = ((240 - y) * self.alt) / 720
                     self.location_new.vector.z = 0
 
             #########################
@@ -77,10 +77,8 @@ class CircleDetect():
             #self.rospy.spin()
             self.rate.sleep()
 
-
         cv2.destroyAllWindows()
         self.cap.release()
-
 
     def callback(self, altitude):
         self.alt = altitude
