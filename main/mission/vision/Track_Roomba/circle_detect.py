@@ -33,6 +33,8 @@ class CircleDetect():
             # read frame from capture
             ret, img = self.cap.read()
 
+            rospy.loginfo(ret)
+
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             output = img.copy()
 
@@ -73,7 +75,7 @@ class CircleDetect():
             ##############################Publisher########################
             ###############################################################
             self.pub.publish(self.location_new)  # Vector3Stamped type variable
-            rospy.loginfo(self.location_new)
+            #rospy.loginfo(self.location_new)
             #self.rospy.spin()
             self.rate.sleep()
 
