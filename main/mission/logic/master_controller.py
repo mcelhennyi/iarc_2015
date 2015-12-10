@@ -61,6 +61,9 @@ class TakeOffRoombaPrioritize:
         # self.obstacle_in_the_way = 0  # 4. Subscribe to this?
         rospy.loginfo("init")
 
+
+        # Lowering used in landing sequence to give a done signal
+        self.lowering = False
         self.main()  # Runs the main def
 
 ######################################################################################################################
@@ -76,6 +79,9 @@ class TakeOffRoombaPrioritize:
             elif self.state == 3:
                 self.land()
                 rospy.loginfo("landing state")
+            elif self.state == 4:
+                rospy.loginfo("LANDED")
+
 
             # Print out altitude in terminal
             rospy.loginfo(self.measured_value_z)
@@ -107,10 +113,17 @@ class TakeOffRoombaPrioritize:
             self.state = 2  # moves to the flying state
 
     def flying_mission(self):
+        # Debug stuff
+        rospy.loginfo("Mission: NOT at target location")
+        mission_text = 'Mission: ' + str(self.mission_state)
+        rospy.loginfo(mission_text)
+
+        # Allow watching for roomba
         self.look_for_roomba = 1  # Look for roomba
 
         # if we are hovering above the roomba
         if self.at_target_location == 1:
+            rospy.loginfo("Mission: At target location")
 
             if self.mission_state == 0:
                 self.mission_state = 1  # Change mission state to next state
@@ -121,7 +134,6 @@ class TakeOffRoombaPrioritize:
                 self.setpoint_z = 2  # Move up
 
             elif self.mission_state == 2:
-                # self.mission_state = 3  # Change mission state to next state
                 self.need_to_land = 1  # land
 
         # Need something like this to tell it to land
@@ -134,11 +146,19 @@ class TakeOffRoombaPrioritize:
         # 2.PID localizes on x=2,y=2 of the roomba location instead of 0,0
         self.setpoint_x = 2
         self.setpoint_y = 2
+        self.setpoint_z = 2
 
-        # 1.When the the quad is there then the quad is ready to land
+        # Checks for quad being on the ground and gives a landed signal
+        if self.at_target_location == 1 and self.lowering is True:
+            self.lowering = False
+            self.state = self.state + 1  # This is the landed signal
+
+        # 1.When the the quad is at the offset landing distance it is ready to lower down
         if self.at_target_location == 1:
             # 2.This needs to make the PID Z localize on 0 again instead of 2
             self.setpoint_z = 0
+            self.lowering = True
+
 
 # for competition
     # def dodge_obstacle(self):
