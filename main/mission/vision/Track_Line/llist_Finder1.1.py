@@ -1,5 +1,6 @@
+#!/usr/bin/env python
 #~/Desktop/Projects/llist_Finder1.1 python
-__author__ = 'JJ'
+#__author__ = 'JJ'
 #this program will output to arrarys with horizontal and verticle lines to be used for navigation
 #
 #Note to self:
@@ -9,14 +10,12 @@ __author__ = 'JJ'
 #
 #
 #
-
+import rospy
 import numpy as np
 import cv2
-
-import rospy
 from std_msgs.msg import String
 
-camera = cv2.VideoCapture(-1)  # Turns on camera, sets it to camera. argument is which camera, -1 means to prompt user for camera
+camera = cv2.VideoCapture(0)  # Turns on camera, sets it to camera. argument is which camera, -1 means to prompt user for camera
 
 class llist_Finder:
 
