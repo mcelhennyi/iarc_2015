@@ -6,28 +6,38 @@
 #Note to self:
 #
 #check list:
-# implement ros publisher
 #
-#
-#
+
 import rospy
 import numpy as np
 import cv2
 from std_msgs.msg import Float64MultiArray
 from std_msgs.msg import Float64
 
-camera = cv2.VideoCapture(0)  # Turns on camera, sets it to camera. argument is which camera, -1 means to prompt user for camera
+camera = cv2.VideoCapture(1)  # Turns on camera, sets it to camera. argument is which camera, -1 means to prompt user for camera
 
 class llist_Finder:
 
     def __init__(self):
 
-	self.Vpub = rospy.Publisher('/Track_line/Vllist', Float64MultiArray, queue_size = 10)
-	self.Hpub = rospy.Publisher('/Track_line/Hllist', Float64MultiArray, queue_size = 10)
-	self.Angpub = rospy.Publisher('/Track_line/Ang_Hline', Float64, queue_size = 10)
+        self.Vpub = rospy.Publisher('/Track_line/Vllist', Float64MultiArray, queue_size = 10)
+        self.Hpub = rospy.Publisher('/Track_line/Hllist', Float64MultiArray, queue_size = 10)
+        self.Angpub = rospy.Publisher('/Track_line/Ang_Hline', Float64, queue_size = 10)
 
-	self.rate = rospy.Rate(10) # 10hz
-	print "----------------"
+        self.rate = rospy.Rate(10) # 10hz
+        print "----------------"
+
+        self.loop()
+
+    def loop(self):
+        while not rospy.is_shutdown():
+            self.main()
+            self.Vpub.publish(self.Vllist)
+            self.Hpub.publish(self.Hllist)
+            self.Angpub.publish(self.HAngAverage)
+            self.rate.sleep()
+
+    def main(self):
         self.img = self.get_image()
         self.exp =  self.get_image()
         self.check = self.get_image()
@@ -38,20 +48,6 @@ class llist_Finder:
         self.Hllist = Float64MultiArray()
         self.Vllist = Float64MultiArray()
         self.HAngAverage = Float64()
-
-        self.loop()
-
-    def loop(self):
-	while not rospy.is_shutdown():
-		self.main()
-		
-        	self.Vpub.publish(self.Vllist)
-        	self.Hpub.publish(self.Hllist)
-        	self.Angpub.publish(self.HAngAverage)
-       	 	self.rate.sleep()
-
-
-    def main(self):
 
         img = self.get_image
         gray = cv2.cvtColor(self.img, cv2.COLOR_BGR2GRAY)
@@ -64,7 +60,7 @@ class llist_Finder:
         # arguments: (image file to perform, minVal [below this are surely not edges], maxVal [above this are sure to be edges],
         # aperture size [default 3],L2gradient[default is true, decides which equn to use for finding the graident])
 
-        lines = cv2.HoughLines(edges, 1, np.pi/180, 60)
+        lines = cv2.HoughLines(edges, 1, np.pi/180, 120)
 
         #makes lines. args:(image to work with, length, angular resolution, maximum gap between lines)
         #outputs an angle and a length. Angle is angle down from the horizontal, length is length from the origin (center of image)
@@ -133,10 +129,6 @@ class llist_Finder:
 
         self.show_images()
 
-
-    #########################################################
-    #########################################################
-	
     def get_image(self):
         retval, im = camera.read()
         return im
@@ -155,6 +147,8 @@ class llist_Finder:
         print self.Vllist.data
         print self.Hllist.data
         print self.HAngAverage.data
+        cv2.waitKey(50)
+
 
 ##############################################################
 ###################End of Main Code###########################
