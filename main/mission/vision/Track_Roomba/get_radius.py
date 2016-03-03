@@ -45,7 +45,7 @@ class CircleDetect():
 
             # detect circles in the image
             circles = cv2.HoughCircles(gaussian_blur, cv2.cv.CV_HOUGH_GRADIENT,
-                3, 100, minRadius=self.radius - 5, maxRadius=self.radius + 5)
+                3, 100, minRadius=50, maxRadius=66)
 
             # ensure at least some circles were found
             if circles is not None:
@@ -60,7 +60,7 @@ class CircleDetect():
                     self.location_new.vector.x = ((x - 320) * self.alt) / 720
                     self.location_new.vector.y = ((240 - y) * self.alt) / 720
                     self.location_new.vector.z = 0
-
+                    print r
 
             #########################
             # show the output image #
@@ -74,8 +74,8 @@ class CircleDetect():
             ###############################################################
             ##############################Publisher########################
             ###############################################################
-            self.pub.publish(self.location_new)  # Vector3Stamped type variable
-            rospy.loginfo(self.location_new)
+            #self.pub.publish(self.location_new)  # Vector3Stamped type variable
+            #rospy.loginfo(self.location_new)
             #self.rospy.spin()
             self.rate.sleep()
 
