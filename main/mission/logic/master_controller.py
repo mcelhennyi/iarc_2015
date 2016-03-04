@@ -2,7 +2,9 @@
 import rospy
 from geometry_msgs.msg import Vector3Stamped
 from std_msgs.msg import Float64
-#from mavros_msgs.msgs import SetMode
+#from mavros.srv import *
+from mavros_msgs.srv import SetMode
+from mavros_msgs.srv import CommandBool
 
 # Taken care of now
 # 1.Need to know when the quad is siting still over its current target(physical roomba or location we tell it),
@@ -32,6 +34,12 @@ class TakeOffRoombaPrioritize:
         #self.off_board_mode = SetMode()  # Creates SetMode object for service
         #self.off_board_mode.custom_mode = "OFFBOARD"  # Sets mode to off board control
         #self.nav_guided_serv = rospy.ServiceProxy('/mavros/cmd/guided_enable', CommandBool)
+
+        # Variable to check if offBoard is enabled
+        self.mode = SetMode()
+        self.mode.custom_mode = "OFFBOARD"
+        self.off_board_mode_enabled = True
+        self.armed = True
 
         # Create variable for use
         self.error_vector = Vector3Stamped()
@@ -68,36 +76,62 @@ class TakeOffRoombaPrioritize:
 
 ######################################################################################################################
     def main(self):
-        rospy.loginfo("main")
         while not rospy.is_shutdown():
-            if self.state == 1:
-                self.take_off()
-                rospy.loginfo("take off state")
-            elif self.state == 2:
-                self.flying_mission()
-                rospy.loginfo("mission state")
-            elif self.state == 3:
-                self.land()
-                rospy.loginfo("landing state")
-            elif self.state == 4:
-                rospy.loginfo("LANDED")
+            # State Machine :::
+            rospy.loginfo("main")
+            if self.off_board_mode_enabled and self.armed:
+                if self.state == 1:
+                    self.take_off()
+                    rospy.loginfo("take off state")
+                elif self.state == 2:
+                    self.flying_mission()
+                    rospy.loginfo("mission state")
+                elif self.state == 3:
+                    self.land()
+                    rospy.loginfo("landing state")
+                elif self.state == 4:
+                    rospy.loginfo("LANDED")
+            else:
+                self.set_off_board_mode()
+            # End of state machine :::
 
+                # Print out altitude in terminal
+                rospy.loginfo(self.measured_value_z)
 
-            # Print out altitude in terminal
-            rospy.loginfo(self.measured_value_z)
+                # subscribe to altitude
+                rospy.Subscriber("/mavros/global_position/rel_alt", Float64, self.get_altitude)
 
-            # subscribe to altitude
-            rospy.Subscriber("/mavros/global_position/rel_alt", Float64, self.get_altitude)
+                # Subscribe to roomba location
+                rospy.Subscriber("/roomba/location_meters", Vector3Stamped, self.xy_location_control)
+                # self.xy_location_control()  # Takes care of 3.
+                self.calculate_error()  # Calculates error and can take care of 2.
+                self.target_location()  # Takes care of 1.
 
-            # Subscribe to roomba location
-            rospy.Subscriber("/roomba/location_meters", Vector3Stamped, self.xy_location_control)
-            # self.xy_location_control()  # Takes care of 3.
-            self.calculate_error()  # Calculates error and can take care of 2.
-            self.target_location()  # Takes care of 1.
-
-            # self.need_to_dodge_things()  # 4
+                # self.need_to_dodge_things()  # 4
 
             self.rate.sleep()  # sleep the ros rate
+
+#####################################################################################################################
+    def set_off_board_mode(self):
+        ready  = rospy.wait_for_service('mavros/set_mode')
+        rospy.loginfo("setting off board mode")
+        if ready:
+            # If offboard is not enabled
+            if not self.off_board_mode_enabled:
+                try:
+                    set_mode_srv = rospy.ServiceProxy('mavros/set_mode', SetMode)
+                    self.off_board_mode_enabled = set_mode_srv.call(self.mode)
+                    rospy.loginfo("Offboard Enabled")
+                except rospy.ServiceException, e:
+                    print "offboard enable: Service call failed: %s"%e
+
+            if self.off_board_mode_enabled:
+                try:
+                    arm_srv = rospy.ServiceProxy('mavros/CommandBool', CommandBool)
+                    self.armed = arm_srv.call(True)
+                    rospy.loginfo("Armed")
+                except rospy.ServiceException, e:
+                    print "Arming enable: Service call failed: %s"%e
 
 #####################################################################################################################
     def take_off(self):
