@@ -56,7 +56,7 @@ class PIDMain():
 
 if __name__ == '__main__':
     # Initiate the node
-    rospy.init_node('PID_main', anonymous=True)
+    rospy.init_node('PID_main', anonymous=False)
     try:
         pid = PIDMain()
     except rospy.ROSInterruptException:

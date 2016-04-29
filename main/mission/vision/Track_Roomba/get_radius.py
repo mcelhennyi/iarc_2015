@@ -38,14 +38,14 @@ class CircleDetect():
             output = img.copy()
 
             # Gaussian Blur
-            gaussian_blur = cv2.GaussianBlur(gray, (9, 9), 0)
+            gaussian_blur = cv2.GaussianBlur(gray, (9, 13), 0)
 
             # Get the radius range based off of altitude (exponential fit)
             self.radius = int(self.a * math.exp(self.alt * self.b))
 
             # detect circles in the image
             circles = cv2.HoughCircles(gaussian_blur, cv2.cv.CV_HOUGH_GRADIENT,
-                3, 100, minRadius=50, maxRadius=66)
+                3, 100, minRadius=15, maxRadius=23)
 
             # ensure at least some circles were found
             if circles is not None:

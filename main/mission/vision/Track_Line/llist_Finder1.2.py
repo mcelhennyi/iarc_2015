@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#~/Desktop/Projects/llist_Finder1.1 python
+#~/Desktop/Projects/llist_Finder1.2 python
 #__author__ = 'JJ'
 #this program will output to arrarys with horizontal and verticle lines to be used for navigation
 #
@@ -7,14 +7,13 @@
 #
 #check list:
 #
-
 import rospy
 import numpy as np
 import cv2
 from std_msgs.msg import Float64MultiArray
 from std_msgs.msg import Float64
 
-camera = cv2.VideoCapture(1)  # Turns on camera, sets it to camera. argument is which camera, -1 means to prompt user for camera
+camera = cv2.VideoCapture(0)  # Turns on camera, sets it to camera. argument is which camera, -1 means to prompt user for camera
 
 class llist_Finder:
 
@@ -158,7 +157,7 @@ class llist_Finder:
 ###################End of Main Code###########################
 ##############################################################
 if __name__ == '__main__':
-	rospy.init_node('llist_finder1.2', anonymous = True)
+	rospy.init_node('llist_finder12', anonymous = True)
 	try:
 		list = llist_Finder()
 	except rospy.ROSInterruptException:

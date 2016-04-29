@@ -35,9 +35,9 @@ class TakeOffRoombaPrioritize:
         #self.off_board_mode.custom_mode = "OFFBOARD"  # Sets mode to off board control
         #self.nav_guided_serv = rospy.ServiceProxy('/mavros/cmd/guided_enable', CommandBool)
 
-        # Variable to check if offBoard is enabled
-        self.mode = SetMode()
-        self.mode.custom_mode = "OFFBOARD"
+        ## Variable to check if offBoard is enabled
+        #self.mode = SetMode()
+        #self.mode.custom_mode = "OFFBOARD"
         self.off_board_mode_enabled = True
         self.armed = True
 
@@ -253,7 +253,7 @@ class TakeOffRoombaPrioritize:
 ######################################################################################################################
 if __name__ == '__main__':
     # Initiate the node
-    rospy.init_node('master', anonymous=True)
+    rospy.init_node('master', anonymous=False)
     rospy.loginfo("if main")
     try:
         master = TakeOffRoombaPrioritize()
