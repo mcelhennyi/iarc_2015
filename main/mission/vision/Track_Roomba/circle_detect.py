@@ -62,8 +62,8 @@ class CircleDetect():
                     # TO find the length on the ground in meters
                     # (height in meters times the distance in pixels)/720
                     self.roomba_locations.poses[i].position.x = ((x - 320)
-                    * self.alt) / 720
-                    self.roomba_locations.poses[i] position.y = ((240 - y)
+                     * self.alt) / 720
+                    self.roomba_locations.poses[i].position.y = ((240 - y)
                     * self.alt) / 720
                     self.roomba_locations.poses[i].position.z = 0
                     i += 1
