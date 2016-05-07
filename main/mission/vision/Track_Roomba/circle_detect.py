@@ -2,7 +2,7 @@
 import cv2
 import numpy as np
 import rospy
-from geometry_msgs.msg import Vector3Stamped
+from geometry_msgs.msg import PoseArray
 import math
 #from std_msgs.msg import Float64
 
@@ -11,7 +11,7 @@ class CircleDetect():
 
     def __init__(self):
         # Create a publisher for acceleration data
-        self.pub = rospy.Publisher('/roomba/location_meters', Vector3Stamped,
+        self.pub = rospy.Publisher('/roomba/location_meters', PoseArray,
             queue_size=10)
         self.rate = rospy.Rate(10)  # 10hz
         # For finding radius
@@ -19,9 +19,11 @@ class CircleDetect():
         self.b = -0.9371
         self.radius = 0
         # Altitude
-        self.alt = 0.8128 # 32 inches ~ as high as the countertop  # NEEDS TO CHANGE FROM HARD CODE TO SUBSCRIPTION
-        self.location_new = Vector3Stamped()
-        self.location_old = Vector3Stamped()
+        #self.alt = 0.8128 # 32 inches ~ as high as the countertop  # NEEDS TO CHANGE FROM HARD CODE TO SUBSCRIPTION
+        #self.alt = 0.3048 # 12 inches ~ as high as the countertop
+        self.alt = 1.143 # 45 inches ~ as high as the countertop
+        self.roomba_locations = PoseArray()
+
         self.cap = cv2.VideoCapture(0)
         self.loop_search()
 
@@ -33,7 +35,6 @@ class CircleDetect():
             # read frame from capture
             ret, img = self.cap.read()
 
-
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             output = img.copy()
 
@@ -41,9 +42,11 @@ class CircleDetect():
             gaussian_blur = cv2.GaussianBlur(gray, (9, 9), 0)
 
             # Get the radius range based off of altitude (exponential fit)
-            self.radius = int(self.a * math.exp(self.alt * self.b))
 
-            # detect circles in the image
+            self.radius = int(-12.1 * math.pow(self.alt, 4) +
+            49.188 * math.pow(self.alt, 3) - 21.3 * math.pow(self.alt, 2)
+            - 132.26 * self.alt + 176.6)
+
             circles = cv2.HoughCircles(gaussian_blur, cv2.cv.CV_HOUGH_GRADIENT,
                 3, 100, minRadius=self.radius - 5, maxRadius=self.radius + 5)
 
@@ -51,16 +54,19 @@ class CircleDetect():
             if circles is not None:
                 circles = np.round(circles[0, :]).astype("int")
                 # loop over the (x, y) coordinates and radius of the circles
+                i = 0
                 for (x, y, r) in circles:
                     cv2.circle(output, (x, y), r, (0, 255, 0), 4)
                     cv2.rectangle(output, (x - 5, y - 5), (x + 5, y + 5),
                         (0, 128, 255), -1)
                     # TO find the length on the ground in meters
                     # (height in meters times the distance in pixels)/720
-                    self.location_new.vector.x = ((x - 320) * self.alt) / 720
-                    self.location_new.vector.y = ((240 - y) * self.alt) / 720
-                    self.location_new.vector.z = 0
-
+                    self.roomba_locations.poses[i].position.x = ((x - 320)
+                    * self.alt) / 720
+                    self.roomba_locations.poses[i] position.y = ((240 - y)
+                    * self.alt) / 720
+                    self.roomba_locations.poses[i].position.z = 0
+                    i += 1
 
             #########################
             # show the output image #
@@ -74,8 +80,8 @@ class CircleDetect():
             ###############################################################
             ##############################Publisher########################
             ###############################################################
-            self.pub.publish(self.location_new)  # Vector3Stamped type variable
-            rospy.loginfo(self.location_new)
+            self.pub.publish(self.roomba_locations)  # PoseArray type variable
+            rospy.loginfo(self.roomba_locations)
             #self.rospy.spin()
             self.rate.sleep()
 

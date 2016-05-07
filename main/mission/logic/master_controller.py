@@ -95,19 +95,19 @@ class TakeOffRoombaPrioritize:
                 self.set_off_board_mode()
             # End of state machine :::
 
-                # Print out altitude in terminal
-                rospy.loginfo(self.measured_value_z)
+            # Print out altitude in terminal
+            rospy.loginfo(self.measured_value_z)
 
-                # subscribe to altitude
-                rospy.Subscriber("/mavros/global_position/rel_alt", Float64, self.get_altitude)
+            # subscribe to altitude
+            rospy.Subscriber("/mavros/global_position/rel_alt", Float64, self.get_altitude)
 
-                # Subscribe to roomba location
-                rospy.Subscriber("/roomba/location_meters", Vector3Stamped, self.xy_location_control)
-                # self.xy_location_control()  # Takes care of 3.
-                self.calculate_error()  # Calculates error and can take care of 2.
-                self.target_location()  # Takes care of 1.
+            # Subscribe to roomba location
+            rospy.Subscriber("/roomba/location_meters", Vector3Stamped, self.xy_location_control)
+            # self.xy_location_control()  # Takes care of 3.
+            self.calculate_error()  # Calculates error and can take care of 2.
+            self.target_location()  # Takes care of 1.
 
-                # self.need_to_dodge_things()  # 4
+            # self.need_to_dodge_things()  # 4
 
             self.rate.sleep()  # sleep the ros rate
 
