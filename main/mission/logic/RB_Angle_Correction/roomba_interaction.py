@@ -14,13 +14,15 @@ class RoombaInteraction:
         self.h_lines = [20]
         self.v_lines = [20]
         self.sub_roomba_array = PoseArray()
-        self.pub_roomba_array = []
+        self.pub_roomba_array = PoseArray()
         self.new_location = []
         self.old_location = []
         self.first_loop = True
         self.x_indx = 0
         self.y_indx = 1
         self.uuid_indx = 2
+
+        self.loop()
 
 # NOTES:
     # ABOUT:
@@ -76,7 +78,7 @@ class RoombaInteraction:
 
                         # Get the trajectory
                         # Assignes the trajectory to the orientation x in the pose array
-                        self.pub_roomba_array.poses[old_indx].orientation.x = self.get_angle(new_roomba, old_roomba)
+                        self.pub_roomba_array.poses[old_indx].orientation.w = self.get_angle(new_roomba, old_roomba)
 
 
     # ##############################################

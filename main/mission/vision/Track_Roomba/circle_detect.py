@@ -3,6 +3,8 @@ import cv2
 import numpy as np
 import rospy
 from geometry_msgs.msg import PoseArray
+from geometry_msgs.msg import Pose
+from std_msgs.msg import Header
 import math
 #from std_msgs.msg import Float64
 
@@ -19,11 +21,14 @@ class CircleDetect():
         self.b = -0.9371
         self.radius = 0
         # Altitude
-        #self.alt = 0.8128 # 32 inches ~ as high as the countertop  # NEEDS TO CHANGE FROM HARD CODE TO SUBSCRIPTION
+        self.alt = 0.8128 # 32 inches ~ as high as the countertop  # NEEDS TO CHANGE FROM HARD CODE TO SUBSCRIPTION
         #self.alt = 0.3048 # 12 inches ~ as high as the countertop
-        self.alt = 1.143 # 45 inches ~ as high as the countertop
-        self.roomba_locations = PoseArray()
-
+        #self.alt = 1.143 # 45 inches ~ as high as the countertop
+        self.pose_array = []
+        self.temp_pose = Pose()
+        self.header = Header()
+        self.header.seq = 0
+        self.header.stamp = rospy.get_time()
         self.cap = cv2.VideoCapture(0)
         self.loop_search()
 
@@ -54,19 +59,25 @@ class CircleDetect():
             if circles is not None:
                 circles = np.round(circles[0, :]).astype("int")
                 # loop over the (x, y) coordinates and radius of the circles
-                i = 0
+                self.pose_array = []
                 for (x, y, r) in circles:
                     cv2.circle(output, (x, y), r, (0, 255, 0), 4)
                     cv2.rectangle(output, (x - 5, y - 5), (x + 5, y + 5),
                         (0, 128, 255), -1)
                     # TO find the length on the ground in meters
                     # (height in meters times the distance in pixels)/720
-                    self.roomba_locations.poses[i].position.x = ((x - 320)
-                     * self.alt) / 720
-                    self.roomba_locations.poses[i].position.y = ((240 - y)
-                    * self.alt) / 720
-                    self.roomba_locations.poses[i].position.z = 0
-                    i += 1
+                    self.temp_pose.position.x = ((x - 320) * self.alt) / 720
+                    self.temp_pose.position.y = ((240 - y) * self.alt) / 720
+
+                    # Published the pixel location as well
+                    self.temp_pose.orientation.x = x
+                    self.temp_pose.orientation.y = y
+                    self.temp_pose.position.z = 0
+                    self.pose_array.append(self.temp_pose)
+
+            self.header.seq += 1
+            self.header.stamp = rospy.get_time()
+            roomba_locations = PoseArray(self.header, self.pose_array)
 
             #########################
             # show the output image #
@@ -80,8 +91,8 @@ class CircleDetect():
             ###############################################################
             ##############################Publisher########################
             ###############################################################
-            self.pub.publish(self.roomba_locations)  # PoseArray type variable
-            rospy.loginfo(self.roomba_locations)
+            self.pub.publish(roomba_locations)  # PoseArray type variable
+            rospy.loginfo(roomba_locations)
             #self.rospy.spin()
             self.rate.sleep()
 
