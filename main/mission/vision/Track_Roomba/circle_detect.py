@@ -66,9 +66,10 @@ class CircleDetect():
                         (0, 128, 255), -1)
                     # TO find the length on the ground in meters
                     # (height in meters times the distance in pixels)/720
-                    self.temp_pose.position.x = ((x - 320) * self.alt) / 720
-                    self.temp_pose.position.y = ((240 - y) * self.alt) / 720
-
+                    #self.temp_pose.position.x = ((x - 320) * self.alt) / 720
+                    #self.temp_pose.position.y = ((240 - y) * self.alt) / 720
+                    self.temp_pose.position.x = ( 320 + self.alt * 0.3200403894 ) / 3779.527559
+                    self.temp_pose.position.y = ( self.alt * 0.3200403894 / 3779.527559
                     # Published the pixel location as well
                     self.temp_pose.orientation.x = x
                     self.temp_pose.orientation.y = y

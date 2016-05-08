@@ -1,22 +1,19 @@
 #!/usr/bin/env python
 import rospy
-from geometry_msgs.msg import Vector3Stamped
-from std_msgs.msg import Float64
-#from mavros.srv import *
-from mavros_msgs.srv import SetMode
-from mavros_msgs.srv import CommandBool
+from geometry_msgs.msg import TwistStamped
 import time
 
 class MasterVelocityTest:
 
     def __init__(self):
         # Create a publisher for acceleration data
-        self.pub = rospy.Publisher("/master/control/error", Vector3Stamped, queue_size=10)
+        self.pub = rospy.Publisher("/master/control/error", TwistStamped, queue_size=10)
 
         # Create variable for use
-        self.error_vector = Vector3Stamped()
+        self.error_vector = TwistStamped()
 
         self.rate = rospy.Rate(10)  # 10hz
+        self.error_vector.header.seq = 0
 
         self.main()  # Runs the main def
 
@@ -37,10 +34,13 @@ class MasterVelocityTest:
 
     # Calculates the distance that the quad needs to move
     def create_error(self, x, y, z):
-        self.error_vector.vector.x = x
-        self.error_vector.vector.y = y
-        self.error_vector.vector.z = z
-        self.pub.publish(self.error_vector)  # Vector3Stamped type variable
+        self.error_vector.twist.linear.x = x
+        self.error_vector.twist.linear.y = y
+        self.error_vector.twist.linear.z = z
+
+        self.error_vector.header.seq += 1
+        self.error_vector.header.stamp = rospy.get_time()
+        self.pub.publish(self.error_vector)
 
 if __name__ == '__main__':
     # Initiate the node
