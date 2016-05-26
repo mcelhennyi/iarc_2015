@@ -46,7 +46,7 @@ class CircleDetect():
             # Gaussian Blur
             gaussian_blur = cv2.GaussianBlur(gray, (9, 9), 0)
 
-            # Get the radius range based off of altitude (exponential fit)
+            # Get the radius range based off of altitude (alt in meter, radius in pixel)
 
             self.radius = int(-12.1 * math.pow(self.alt, 4) +
             49.188 * math.pow(self.alt, 3) - 21.3 * math.pow(self.alt, 2)
@@ -65,9 +65,9 @@ class CircleDetect():
                     cv2.rectangle(output, (x - 5, y - 5), (x + 5, y + 5),
                         (0, 128, 255), -1)
                     # TO find the length on the ground in meters
-                    # (height in meters times the distance in pixels)/720
-                    self.temp_pose.position.x = ((x - 320) * self.alt) / 720
-                    self.temp_pose.position.y = ((240 - y) * self.alt) / 720
+                    # (height in meters times the distance in pixels)/360
+                    self.temp_pose.position.x = (( x- 320) * self.alt) / 360
+                    self.temp_pose.position.y = ((240 - y) * self.alt) / 360
                     #self.temp_pose.position.x =
                     #self.temp_pose.position.y =
                     # Published the pixel location as well
