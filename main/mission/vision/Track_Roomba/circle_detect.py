@@ -2,8 +2,8 @@
 import cv2
 import numpy as np
 import rospy
-from geometry_msgs.msg import PoseArray
 from geometry_msgs.msg import Pose
+from geometry_msgs.msg import PoseArray
 from std_msgs.msg import Header
 import math
 #from std_msgs.msg import Float64
@@ -24,11 +24,11 @@ class CircleDetect():
         self.alt = 0.8128 # 32 inches ~ as high as the countertop  # NEEDS TO CHANGE FROM HARD CODE TO SUBSCRIPTION
         #self.alt = 0.3048 # 12 inches ~ as high as the countertop
         #self.alt = 1.143 # 45 inches ~ as high as the countertop
-        self.pose_array = []
+        self.pose_array = PoseArray()
         self.temp_pose = Pose()
         self.header = Header()
         self.header.seq = 0
-        self.header.stamp = rospy.get_time()
+        self.header.stamp = rospy.Time.now()
         self.cap = cv2.VideoCapture(0)
         self.loop_search()
 
@@ -68,17 +68,15 @@ class CircleDetect():
                     # (height in meters times the distance in pixels)/360
                     self.temp_pose.position.x = (( x- 320) * self.alt) / 360
                     self.temp_pose.position.y = ((240 - y) * self.alt) / 360
-                    #self.temp_pose.position.x =
-                    #self.temp_pose.position.y =
                     # Published the pixel location as well
-                    self.temp_pose.orientation.x =x
-                    self.temp_pose.orientation.y =y
+                    self.temp_pose.orientation.x = ( x- 320)
+                    self.temp_pose.orientation.y = (240 - y)
                     self.temp_pose.position.z = 0
                     self.pose_array.append(self.temp_pose)
 
             self.header.seq += 1
             self.header.stamp = rospy.get_time()
-            roomba_locations = PoseArray(self.header, self.pose_array)
+            roomba_locations = PoseArray( self.header,self.pose_array)
 
             #########################
             # show the output image #
@@ -93,7 +91,9 @@ class CircleDetect():
             ##############################Publisher########################
             ###############################################################
             self.pub.publish(roomba_locations)  # PoseArray type variable
-            rospy.loginfo(roomba_locations)
+            rospy.loginfo (roomba_locations)
+
+
             #self.rospy.spin()
             self.rate.sleep()
 
