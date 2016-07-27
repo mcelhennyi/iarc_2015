@@ -59,7 +59,7 @@ class RoombaInteraction:
     # Loops through the roomba array and compares the old location to new location to get trajectory
     def compare_location_estimate_trajectory(self):
         # Loop through roombas to get new location
-        for i, roomba in enumerate(self.sub_roomba_array.poses):
+        for i, roomba in enumerate(self.sub_roomba_array.pose):
             self.new_location[i] = self.get_roomba_grid_location(roomba)
 
         if self.first_loop:  # Since it is the first run the old location is set to the old location (This only runs once)

@@ -181,16 +181,16 @@ class TakeOffRoombaPrioritize:
                     set_mode_srv = rospy.ServiceProxy('mavros/set_mode', SetMode)
                     self.off_board_mode_enabled = set_mode_srv.call(self.mode)
                     rospy.loginfo("Offboard Enabled")
-                except rospy.ServiceException, e:
-                    print "offboard enable: Service call failed: %s"%e
+                except rospy.ServiceException as e:
+                    print ( ("offboard enable: Service call failed: %s" %e ) )
 
             if self.off_board_mode_enabled:
                 try:
                     arm_srv = rospy.ServiceProxy('mavros/CommandBool', CommandBool)
                     self.armed = arm_srv.call(True)
                     rospy.loginfo("Armed")
-                except rospy.ServiceException, e:
-                    print "Arming enable: Service call failed: %s"%e
+                except rospy.ServiceException as e:
+                    print ( ("Arming enable: Service call failed: %s"%e ) )
 
 ###############################################################################
 

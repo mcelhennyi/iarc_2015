@@ -6,7 +6,7 @@ from geometry_msgs.msg import Pose
 from geometry_msgs.msg import PoseArray
 from std_msgs.msg import Header
 import math
-#from std_msgs.msg import Float64
+from std_msgs.msg import Float64
 
 
 class CircleDetect():
@@ -35,7 +35,7 @@ class CircleDetect():
     def loop_search(self):
         while not rospy.is_shutdown():
             # Uncomment for actual flight to find altitude
-            #rospy.Subscriber("/mavros/global_position/rel_alt", Float64, self.callback)
+            rospy.Subscriber("/mavros/global_position/rel_alt", Float64, self.callback)
 
             # read frame from capture
             ret, img = self.cap.read()
