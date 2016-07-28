@@ -14,11 +14,11 @@ class roomba_tracking:
         self.rate = rospy.Rate(10)
         self.h_lines = [20]
         self.v_lines = [20]
-        self.uuid_indx = 0
-        self.Header.seq += 1
-        self.Header.stamp = rospy.get_time()
+        #self.Header.seq += 1
+        #self.Header.stamp = rospy.get_time()
         self.roomba_track = ()
-        self.loop()
+        #self.loop()
+
         #subscribe roomba arrray from "Circle_detect.py"
         rospy.Subscriber("/roomba/location_meters", PoseArray, self.roomba_array, queue_size=10)
 
@@ -33,10 +33,12 @@ class roomba_tracking:
             rospy.loginfo ( self.roomba_locations)
 
             #apply uuid to list index
+            for i, self.uuid_indx in enumerate(self.roomba_locations):
+                self.uuid_indx = self.roomba_locations.index
 
 
-            # Sleep the ros rate for the loop
-            self.rate.sleep()  # sleep the ros rate
+        # Sleep the ros rate for the loop
+        self.rate.sleep()  # sleep the ros rate
 
 
 

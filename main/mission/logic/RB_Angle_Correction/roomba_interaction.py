@@ -75,23 +75,23 @@ class RoombaInteraction:
         for i, roomba in enumerate(self.sub_roomba_array.pose):
             self.new_location[i] = self.get_roomba_grid_location(roomba)
 
-        if self.first_loop:  # Since it is the first run the old location is set to the old location (This only runs once)
-            self.old_location = self.new_location
-        else:
+            if self.first_loop:  # Since it is the first run the old location is set to the old location (This only runs once)
+                self.old_location = self.new_location
+            else:
             # Loop through the new locations
-            for new_indx, new_roomba in enumerate(self.new_location):
+                for new_indx, new_roomba in enumerate(self.new_location):
                 # Loop through the old locations
-                for old_indx, old_roomba in enumerate(self.old_location):
+                    for old_indx, old_roomba in enumerate(self.old_location):
                     # If the old roomba is the same as new roomba
-                    if new_roomba[self.uuid_indx] == old_roomba[self.uuid_indx]:
+                        if new_roomba[self.uuid_indx] == old_roomba[self.uuid_indx]:
                         # Assign all of the subscribed data to the publish array
-                        self.pub_roomba_array.poses[old_indx].position.x = self.new_location[self.x_indx]
-                        self.pub_roomba_array.poses[old_indx].position.y = self.new_location[self.y_indx]
-                        self.pub_roomba_array.poses[old_indx].position.z = self.new_location[self.uuid_indx]
+                            self.pub_roomba_array.poses[old_indx].position.x = self.new_location[self.x_indx]
+                            self.pub_roomba_array.poses[old_indx].position.y = self.new_location[self.y_indx]
+                            self.pub_roomba_array.poses[old_indx].position.z = self.new_location[self.uuid_indx]
 
                         # Get the trajectory
                         # Assignes the trajectory to the orientation x in the pose array
-                        self.pub_roomba_array.poses[old_indx].orientation.w = self.get_angle(new_roomba, old_roomba)
+                            self.pub_roomba_array.poses[old_indx].orientation.w = self.get_angle(new_roomba, old_roomba)
 
 
 
