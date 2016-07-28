@@ -23,6 +23,19 @@ class RoombaInteraction:
         self.uuid_indx = 2
 
         self.loop()
+    # ##############################################
+    # Call backs for subscriber
+    # Type Pose array
+    def roomba_callback(self, roombas):
+        self.sub_roomba_array = roombas
+
+    # Type Float64MultiArray
+    def h_line_callback(self, h_lines):
+        self.h_lines = h_lines
+
+    # Type Float64MultiArray
+    def v_line_callback(self, v_lines):
+        self.v_lines = v_lines
 
 # NOTES:
     # ABOUT:
@@ -81,19 +94,7 @@ class RoombaInteraction:
                         self.pub_roomba_array.poses[old_indx].orientation.w = self.get_angle(new_roomba, old_roomba)
 
 
-    # ##############################################
-    # Call backs for subscriber
-    # Type Pose array
-    def roomba_callback(self, roombas):
-        self.sub_roomba_array = roombas
 
-    # Type Float64MultiArray
-    def h_line_callback(self, h_lines):
-        self.h_lines = h_lines
-
-    # Type Float64MultiArray
-    def v_line_callback(self, v_lines):
-        self.v_lines = v_lines
     # ###############################################
 
     # Compare the location of the roomba in relation to the quad to the grid lines to return an array
