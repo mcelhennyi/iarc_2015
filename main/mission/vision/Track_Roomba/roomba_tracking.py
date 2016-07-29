@@ -1,6 +1,6 @@
 import rospy
 from geometry_msgs.msg import Pose, PoseArray
-#from std_msgs.msg import Header, Float64
+from std_msgs.msg import Float64
 
 #import math
 
@@ -12,30 +12,21 @@ class roomba_tracking:
         self.pub = rospy.Publisher("/roomba_tracking/roomba_array", PoseArray, queue_size=10)
         self.sub_roomba_array = Pose()
         self.rate = rospy.Rate(10)
-        self.h_lines = [20]
-        self.v_lines = [20]
-        #self.Header.seq += 1
-        #self.Header.stamp = rospy.get_time()
-        self.roomba_track = ()
+        #I set Pose.oreitation.w as UUID as Ian said
+        self.uuid_indx = Pose.orientation.w
         #self.loop()
 
-        #subscribe roomba arrray from "Circle_detect.py"
-        rospy.Subscriber("/roomba/location_meters", PoseArray, self.roomba_array, queue_size=10)
+        #subscribe roomba arrray from "Circle_detect.py". Use Pose.orientation.w as UUID
+        rospy.Subscriber("/roomba/location_meters", Float64, Pose.orientation.w, queue_size=10)
 
         while not rospy.is_shutdown():
-
-            self.roomba_locations = list ( enumerate(self.roomba_array.Pose))
-
-        #rospy.Subscriber("/mavros/global_position/rel_alt", Float64, self.callback)
+            #enumerated UUID start at 0
+            #there we have a pose includes index and UUID
+            self.roomba_locations = list ( enumerate( Pose.orientation.w))
 
         #PUBLISH THE listed roomba location
             self.pub.publish( self.roomba_locations)
             rospy.loginfo ( self.roomba_locations)
-
-            #apply uuid to list index
-            for i, self.uuid_indx in enumerate(self.roomba_locations):
-                self.uuid_indx = self.roomba_locations.index
-
 
         # Sleep the ros rate for the loop
         self.rate.sleep()  # sleep the ros rate
