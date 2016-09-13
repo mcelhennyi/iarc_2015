@@ -21,7 +21,6 @@ class RoombaInteraction:
         self.x_indx = 0
         self.y_indx = 1
         self.uuid_indx = 2
-
         self.loop()
     # ##############################################
     # Call backs for subscriber
@@ -93,9 +92,6 @@ class RoombaInteraction:
                         # Assignes the trajectory to the orientation x in the pose array
                             self.pub_roomba_array.poses[old_indx].orientation.w = self.get_angle(new_roomba, old_roomba)
 
-
-
-    # ###############################################
 
     # Compare the location of the roomba in relation to the quad to the grid lines to return an array
     # containing the location of the roomba in the grid.
