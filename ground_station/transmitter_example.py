@@ -1,12 +1,13 @@
 import socket
 import time
+import struct
 
 while True:
-    UDP_IP = "234.5.6.7"
+    UDP_IP = "10.10.16.255"
 
     UDP_PORT = 4567
 
-    MESSAGE = "Hello, World!"
+    MESSAGE = struct.pack('d', 3.3)
 
 
     print "UDP target IP:", UDP_IP
@@ -20,7 +21,7 @@ while True:
 
                         socket.SOCK_DGRAM)   # UDP
 
-    sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 20)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 20)
     sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
 
-    time.sleep(3)
+    time.sleep(1/100)
