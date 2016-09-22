@@ -12,6 +12,9 @@ class MotorTest():
         self.pub2 = rospy.Publisher('/mavros/setpoint_attitude/cmd_vel',
         TwistStamped, queue_size=10)
 
+        #self.pub3 = rospy.Publisher('/mavros/setpoint_accel/accel',
+        #)
+
         # set the rate of ros loop
         self.rate = rospy.Rate(10)  # 10hz
 
@@ -28,7 +31,7 @@ class MotorTest():
         while not rospy.is_shutdown():
 
             if count < 50:
-                self.fill_twist(0, 0, 2, 0, 0, 0)
+                self.fill_twist(0, 0, 0.25, 0, 0, 0)
             else:
                 self.fill_twist(0, 0, 0, 0, 0, 0)
 

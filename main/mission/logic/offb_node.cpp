@@ -1,6 +1,6 @@
 /**
  * @file offb_node.cpp
- * @brief offboard example node, written with mavros version 0.14.2, px4 flight
+ * @brief GUIDED example node, written with mavros version 0.14.2, px4 flight
  * stack and tested in Gazebo SITL
  */
 
@@ -17,13 +17,16 @@ void state_cb(const mavros_msgs::State::ConstPtr& msg){
 
 int main(int argc, char **argv)
 {
+    int off_en, arm_en;
+    off_en = 0;
+    arm_en = 0;
     ros::init(argc, argv, "offb_node");
     ros::NodeHandle nh;
 
     ros::Subscriber state_sub = nh.subscribe<mavros_msgs::State>
             ("mavros/state", 10, state_cb);
-//     ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
-//             ("mavros/setpoint_position/local", 10);
+     ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
+             ("mavros/setpoint_position/local", 10);
     ros::ServiceClient arming_client = nh.serviceClient<mavros_msgs::CommandBool>
             ("mavros/cmd/arming");
     ros::ServiceClient set_mode_client = nh.serviceClient<mavros_msgs::SetMode>
@@ -32,23 +35,23 @@ int main(int argc, char **argv)
     //the setpoint publishing rate MUST be faster than 2Hz
     ros::Rate rate(20.0);
 
-    // wait for FCU connection
-    while(ros::ok() && current_state.connected){
-        ros::spinOnce();
-        rate.sleep();
-    }
+//    // wait for FCU connection
+//  /  while(ros::ok() && current_state.connected){
+//        ros::spinOnce();
+//        rate.sleep();
+//    }
 
 //     geometry_msgs::PoseStamped pose;
-//     pose.pose.position.x = 0;
-//     pose.pose.position.y = 0;
-//     pose.pose.position.z = 2;
+ //    pose.pose.position.x = 0;
+  //   pose.pose.position.y = 0;
+   //  pose.pose.position.z = 2;
 
-//     //send a few setpoints before starting
-//     for(int i = 100; ros::ok() && i > 0; --i){
-//        // local_pos_pub.publish(pose);
-//         ros::spinOnce();
-//         rate.sleep();
-//     }
+     //send a few setpoints before starting
+     //for(int i = 100; ros::ok() && i > 0; --i){
+       //  local_pos_pub.publish(pose);
+        // ros::spinOnce();
+        // rate.sleep();
+     //}
 
     mavros_msgs::SetMode offb_set_mode;
     offb_set_mode.request.custom_mode = "OFFBOARD";
@@ -63,7 +66,8 @@ int main(int argc, char **argv)
             (ros::Time::now() - last_request > ros::Duration(5.0))){
             if( set_mode_client.call(offb_set_mode) &&
                 offb_set_mode.response.success){
-                ROS_INFO("Offboard enabled");
+                ROS_INFO("OFFBOARD enabled");
+		    off_en = 1;
             }
             last_request = ros::Time::now();
         } else {
@@ -72,13 +76,21 @@ int main(int argc, char **argv)
                 if( arming_client.call(arm_cmd) &&
                     arm_cmd.response.success){
                     ROS_INFO("Vehicle armed");
+		    arm_en = 1;
                 }
                 last_request = ros::Time::now();
             }
         }
 
-//         local_pos_pub.publish(pose);
-
+        // local_pos_pub.publish(pose);
+	
+	if(off_en && arm_en)
+	{
+	    //break loop when armed and offboard
+	    ROS_INFO("Vehicle ready.");
+	    break;
+	}
+		
         ros::spinOnce();
         rate.sleep();
     }
