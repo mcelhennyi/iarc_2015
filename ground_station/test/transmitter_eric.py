@@ -3,7 +3,7 @@ import struct
 import time
 import socket
 
-UDP_IP = "155.31.42.140"   #155.31.42.140
+UDP_IP = "10.10.16.197"   #155.31.42.140
 UDP_PORT = 5005
 MESSAGE = "Hello, World!"
 
@@ -21,7 +21,7 @@ class TransmitterEric():
         # Send UDP packets
 
 
-        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
+        transmittersock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        transmittersock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
 
 
