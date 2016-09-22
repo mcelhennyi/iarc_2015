@@ -1,31 +1,27 @@
-import socket
+
 import struct
 import time
+import socket
+
+UDP_IP = "155.31.42.140"   #155.31.42.140
+UDP_PORT = 5005
+MESSAGE = "Hello, World!"
+
+print("UDP target IP:", UDP_IP)
+print("UDP target port:", UDP_PORT)
+print("message:", MESSAGE)
 
 
 class TransmitterEric():
 
-    def __init__(self):
-        self.x=1
-        self.main()
+
 
     def main(self):
-        x=5
-        print(x)
-        print(self.x)
-        time.sleep(5) #5 second delay
-        data = struct.pack('dd',5.7, 6.5)
-        print(data)
 
-        number1, number2 = struct.unpack('dd', data) #look into using tuple for unpacking variables
-        print(number1, number2)
+        # Send UDP packets
 
 
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
 
-#wireshark tool
-#broadcast udp to send
 
-
-if __name__ == '__main__':
-
-    pid = TransmitterEric()
