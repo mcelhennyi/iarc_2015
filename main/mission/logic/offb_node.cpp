@@ -67,10 +67,11 @@ int main(int argc, char **argv)
             if( set_mode_client.call(offb_set_mode) &&
                 offb_set_mode.response.success){
                 ROS_INFO("OFFBOARD enabled");
-		    off_en = 1;
+		    
             }
             last_request = ros::Time::now();
         } else {
+	    off_en = 1;
             if( !current_state.armed &&
                 (ros::Time::now() - last_request > ros::Duration(5.0))){
                 if( arming_client.call(arm_cmd) &&
@@ -83,7 +84,7 @@ int main(int argc, char **argv)
         }
 
         // local_pos_pub.publish(pose);
-	
+	//ROS_INFO(current_state.mode);
 	if(off_en && arm_en)
 	{
 	    //break loop when armed and offboard
