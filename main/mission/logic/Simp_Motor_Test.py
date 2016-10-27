@@ -1,5 +1,5 @@
 import rospy
-frmo geometry_msgs.msg import TwistStamped
+from geometry_msgs.msg import TwistStamped
 #Author: JJ Marcus
 #Last Edit Date: 10/26/2016
 
