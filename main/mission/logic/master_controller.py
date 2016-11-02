@@ -102,7 +102,7 @@ class TakeOffRoombaPrioritize:
             rospy.Subscriber("/mavros/global_position/rel_alt", Float64, self.get_altitude)
 
             # Subscribe to roomba location
-            rospy.Subscriber("/roomba/location_meters", Vector3Stamped, self.xy_location_control)
+            rospy.Subscriber("/roomba/location_metersVector3Stamped, self.xy_location_control)
             # self.xy_location_control()  # Takes care of 3.
             self.calculate_error()  # Calculates error and can take care of 2.
             self.target_location()  # Takes care of 1.
@@ -259,3 +259,4 @@ if __name__ == '__main__':
         master = TakeOffRoombaPrioritize()
     except rospy.ROSInterruptException:
         pass
+", 
