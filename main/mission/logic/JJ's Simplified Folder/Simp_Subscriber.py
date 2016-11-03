@@ -21,12 +21,11 @@ class Listener():
 
     def main(self):
 
-        rospy.Subscriber("/mavros/setpoint_velocity/cmd_vel",TwistStamped,self.print_info_callback)
+        rospy.Subscriber("/mavros/global_position/rel_alt",Float64,self.print_info_callback)
         self.rate.sleep()
 
 
     def print_info_callback(self, data):
-        rospy.loginfo("Log:")
         rospy.loginfo(str(data))
 
 if __name__ == '__main__':
