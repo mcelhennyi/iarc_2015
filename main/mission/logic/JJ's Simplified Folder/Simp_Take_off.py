@@ -38,11 +38,11 @@ class SimpTakeOff():
             rospy.Subscriber("/mavros/global_position/rel_alt",Float64,self.altitude_callback)
 
             # set the speed
-            if self.altitude >= self.goal_altitude-0.05 or self.altitude <= self.goal_altitude+0.05 :
+            if self.altitude >= self.goal_altitude - 0.1 or self.altitude <= self.goal_altitude + 0.1 :
                 z_linear = 0
-            elif self.altitude > self.goal_altitude+0.05:
+            elif self.altitude > self.goal_altitude + 0.1:
                 z_linear = - 0.05
-            elif self.altitude < self.goal_altitude-.05:
+            elif self.altitude < self.goal_altitude - 0.1:
                 z_linear = 0.05
 
            # publish the velocity
