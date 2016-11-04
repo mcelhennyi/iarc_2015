@@ -21,7 +21,7 @@ class SimpTakeOff():
         self.altitude = Float64()
 
         self.goal_altitude = Float64()
-        self.goal_altitude = 2
+        self.goal_altitude = 0.5
 
         # Create variable to publish
         self.Velocity_Vector = TwistStamped() # ros data type
@@ -38,12 +38,12 @@ class SimpTakeOff():
             rospy.Subscriber("/mavros/global_position/rel_alt",Float64,self.altitude_callback)
 
             # set the speed
-            if self.altitude == self.goal_altitude:
+            if self.altitude >= self.goal_altitude-0.05 or self.altitude <= self.goal_altitude+0.05 :
                 z_linear = 0
-            elif self.altitude > self.goal_altitude:
-                z_linear = - 0.1
-            elif self.altitude < self.goal_altitude:
-                z_linear = 0.1
+            elif self.altitude > self.goal_altitude+0.05:
+                z_linear = - 0.05
+            elif self.altitude < self.goal_altitude-.05:
+                z_linear = 0.05
 
            # publish the velocity
             self.publish_velocity(0,0,z_linear,0,0,0,seq_counter)
