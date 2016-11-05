@@ -20,8 +20,7 @@ class SimpTakeOff():
         #creates the altitude variable
         self.altitude = Float64()
 
-        self.goal_altitude = Float64()
-        self.goal_altitude = 0.5
+        self.goal_altitude = 1
 
         # Create variable to publish
         self.Velocity_Vector = TwistStamped() # ros data type
