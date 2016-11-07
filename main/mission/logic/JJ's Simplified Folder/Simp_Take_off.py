@@ -3,6 +3,7 @@ import rospy
 from geometry_msgs.msg import *
 from std_msgs.msg import *
 from mavros_msgs.srv import *
+from mavros_msgs.msg import *
 
 
 #Author: JJ Marcus
@@ -28,21 +29,21 @@ class SimpTakeOff():
 
     def main_loop(self):
         seq_counter = 0
-        rospy.Subscriber("/mavros/global_position/rel_alt",Float64,self.altitude_callback)
+        rospy.Subscriber("/mavros/altitude",Altitude,self.altitude_callback)
         z_linear = 0
         while not rospy.is_shutdown():
             seq_counter += 1
 
             # get the altitude
-            rospy.Subscriber("/mavros/global_position/rel_alt",Float64,self.altitude_callback)
+            rospy.Subscriber("/mavros/altitude",Altitude,self.altitude_callback)
 
             # set the speed
-            if self.altitude >= self.goal_altitude - 0.1 or self.altitude <= self.goal_altitude + 0.1 :
+            if self.altitude >= self.goal_altitude - 0.1 and self.altitude <= self.goal_altitude + 0.1 :
                 z_linear = 0
             elif self.altitude > self.goal_altitude + 0.1:
-                z_linear = - 0.05
+                z_linear = - 0.02
             elif self.altitude < self.goal_altitude - 0.1:
-                z_linear = 0.05
+                z_linear = 0.02
 
            # publish the velocity
             self.publish_velocity(0,0,z_linear,0,0,0,seq_counter)
@@ -71,7 +72,7 @@ class SimpTakeOff():
 
         # logs the xyz accel data
         #rospy.loginfo(self.Velocity_Vector)
-        log = [x_linear,y_linear,z_linear,x_ang,y_ang,z_ang, self.altitude, seq_counter]
+        log = [x_linear,y_linear,z_linear,x_ang,y_ang,z_ang, self.altitude]
 
         rospy.loginfo(log)
 
@@ -79,8 +80,18 @@ class SimpTakeOff():
         # use the publisher
         self.velocity_publisher.publish(self.Velocity_Vector)
 
-    def altitude_callback(self, altitude):
-        self.altitude = altitude.data
+    def altitude_callback(self, data):
+        IncomingData = [0,0,0,0,0]
+        IncomingData[0] = data.monotonic
+        IncomingData[1] = data.amsl
+        IncomingData[2] = data.relative
+        IncomingData[3] = data.terrain
+        IncomingData[4] = data.bottom_clearance
+
+        if IncomingData[2] > 0.35 and IncomingData[2] < 20:
+            self.altitude = ( IncomingData[2] )
+        else:
+            self.altitude = ( IncomingData[1] - IncomingData[3] )
 
 
 if __name__ == '__main__':
