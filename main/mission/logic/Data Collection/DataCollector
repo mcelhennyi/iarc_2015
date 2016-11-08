@@ -1,0 +1,61 @@
+#!/usr/bin/env python
+import rospy
+
+from geometry_msgs.msg import *
+from std_msgs.msg import *
+from mavros_msgs.srv import *
+from mavros_msgs.msg import *
+
+import time
+
+# Author: JJ Marcus
+# Last Edited Date: 8th November 2016
+
+# format: in the main it will write the time then a comma, then each subscriber's call back will
+# write it's own data, in the format of "data, data, data," always ending in a comma
+# at the end of the main, it will add a new line, and repeate
+
+# keep the call back definitions in the same order as the callback calls
+
+class Blackbox():
+
+    def __init__(self):
+        rospy.loginfo("init")
+        self.rate = rospy.Rate(10)
+        self.black_box_file = open(str(time.ctime()), "a"))
+        self.main()
+
+    def main(self):
+        while not rospy.is_shutdown():
+
+            self.black_box_file.write(str(time.ctime()+", ")
+            rospy.Subscriber("/mavros/state",State,self.state_callback)
+            #rospy.Subscriber("/mavros/battery",BatteryStatus,self.battery_callback)
+            rospy.Subscriber("/mavros/altitude",Altitude,self.altitude_callback)
+
+
+            self.black_box_file.write("/n")
+            self.rate.sleep()
+           
+
+    def state_callback(self, state):
+        self.black_box_file.write(str(state.armed) + ", " + str(state.guided) + ", " + \
+                                  state.mode + ", ")
+
+    
+
+    def altitude_callback(self, altitude):
+        self.black_box_file.write(str(altitude.monotonic) + ", " + str(altitude.asml) + ", " + \
+                                  str(altitude.relative) + ", " + str(altitude.terrain) + ", " + \
+                                  str(altitude.bottom_clearance) + ", ")
+
+    
+
+
+if __name__ == '__main__':
+    # init the node
+    rospy.init_node('BlackBox')
+    try:
+        box = Blackbox()
+    except rospy.RosInterruptException:
+        pass
