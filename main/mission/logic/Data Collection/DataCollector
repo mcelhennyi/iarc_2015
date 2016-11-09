@@ -30,8 +30,9 @@ class Blackbox():
 
             self.black_box_file.write(str(time.ctime()+", ")
             rospy.Subscriber("/mavros/state",State,self.state_callback)
-            #rospy.Subscriber("/mavros/battery",BatteryStatus,self.battery_callback)
+            rospy.Subscriber("/mavros/battery",BatteryStatus,self.battery_callback)
             rospy.Subscriber("/mavros/altitude",Altitude,self.altitude_callback)
+            #rospy.Subscriber("/mavros/ ______", ______ ,self.imu_callback)
 
 
             self.black_box_file.write("/n")
@@ -42,12 +43,17 @@ class Blackbox():
         self.black_box_file.write(str(state.armed) + ", " + str(state.guided) + ", " + \
                                   state.mode + ", ")
 
-    
+    def battery_callback(self, battery)
+        self.black_box_file.write(str(battery.voltage) + ", ")
 
+    
     def altitude_callback(self, altitude):
         self.black_box_file.write(str(altitude.monotonic) + ", " + str(altitude.asml) + ", " + \
                                   str(altitude.relative) + ", " + str(altitude.terrain) + ", " + \
                                   str(altitude.bottom_clearance) + ", ")
+
+    def imu_callback(self, imu):
+        pass
 
     
 
