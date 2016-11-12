@@ -20,47 +20,47 @@ import time
 class Blackbox():
 
     def __init__(self):
-        rospy.loginfo("init")
+        rospy.loginfo("Begin Recodring")
         self.rate = rospy.Rate(10)
-        self.black_box_file = open(str(time.ctime()), "a"))
+        self.black_box_file = open(str(time.ctime()), "a")
         self.main()
 
     def main(self):
         while not rospy.is_shutdown():
 
-            self.black_box_file.write(str(time.ctime()+", ")
-            rospy.Subscriber("/mavros/state",State,self.state_callback)
-            rospy.Subscriber("/mavros/battery",BatteryStatus,self.battery_callback)
-            rospy.Subscriber("/mavros/altitude",Altitude,self.altitude_callback)
+            self.black_box_file.write("\n")
+
+            #self.black_box_file.write(str(time.ctime())+", ")
+            rospy.Subscriber("/mavros/state", State, self.state_callback)
+            rospy.Subscriber("/mavros/battery", BatteryStatus, self.battery_callback)
+            rospy.Subscriber("/mavros/altitude", Altitude, self.altitude_callback)
             #rospy.Subscriber("/mavros/ ______", ______ ,self.imu_callback)
 
-
-            self.black_box_file.write("/n")
             self.rate.sleep()
-           
+
 
     def state_callback(self, state):
-        self.black_box_file.write(str(state.armed) + ", " + str(state.guided) + ", " + \
-                                  state.mode + ", ")
+        self.black_box_file.write((str(state.armed) + ", " + str(state.guided) + ", " + \
+                                  state.mode + ", "))
 
-    def battery_callback(self, battery)
-        self.black_box_file.write(str(battery.voltage) + ", ")
+    def battery_callback(self, battery):
+        self.black_box_file.write((str(battery.voltage) + ", "))
 
-    
+
     def altitude_callback(self, altitude):
-        self.black_box_file.write(str(altitude.monotonic) + ", " + str(altitude.asml) + ", " + \
+        self.black_box_file.write((str(altitude.monotonic) + ", " + str(altitude.asml) + ", " + \
                                   str(altitude.relative) + ", " + str(altitude.terrain) + ", " + \
-                                  str(altitude.bottom_clearance) + ", ")
+                                  str(altitude.bottom_clearance) + ", "))
 
     def imu_callback(self, imu):
         pass
 
-    
+
 
 
 if __name__ == '__main__':
     # init the node
-    rospy.init_node('BlackBox')
+    rospy.init_node('Blackbox')
     try:
         box = Blackbox()
     except rospy.RosInterruptException:
