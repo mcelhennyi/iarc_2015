@@ -48,7 +48,7 @@ class Blackbox():
 
 
     def altitude_callback(self, altitude):
-        self.black_box_file.write((str(altitude.monotonic) + ", " + str(altitude.asml) + ", " + \
+        self.black_box_file.write((str(altitude.monotonic) + ", " + str(altitude.amsl) + ", " + \
                                   str(altitude.relative) + ", " + str(altitude.terrain) + ", " + \
                                   str(altitude.bottom_clearance) + ", "))
 
