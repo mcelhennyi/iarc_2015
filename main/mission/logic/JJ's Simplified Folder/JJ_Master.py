@@ -61,7 +61,7 @@ class Master():
             rospy.Subscriber("/mavros/altitude",Altitude,self.altitude_callback)
             count += 1
 
-            if count % 100 = 1:
+            if count % 100 == 1:
                 rospy.loginfo("State: " + str(state))
 
 
@@ -82,7 +82,7 @@ class Master():
                 state = 1
 
             # waiting for offb control
-            if state = 1
+            if state == 1
                 countdown = 5
                 rospy.Subscriber("/mavros/state",State,self.state_callback)
                 if self.state_current.guided:
@@ -95,12 +95,12 @@ class Master():
             # Take off:
             elif state == 2:
                  altitude_goal = 2
-                 if count % 10 = 1:
+                 if count % 10 == 1:
                       rospy.loginfo("Current altitude: " + str(self.altitude_current))
 
                  if self.altitude_current <= altitude_goal + 0.1 and self.altitude_current >= altitude_goal - 0.1:
                      countdown -= 0.1
-                     if count % 10 = 1:
+                     if count % 10 == 1:
                           rospy.loginfo("At goal altitude, switching to logic state")
                   
                  else:
@@ -113,7 +113,7 @@ class Master():
             # Landing
             elif state == 3:
                  countdown = 5
-                 if count % 10 = 1:
+                 if count % 10 == 1:
                      rospy.loginfo(self.altitude)
                  z_linear = -0.02
                  if self.altitude_current < 0.10:
