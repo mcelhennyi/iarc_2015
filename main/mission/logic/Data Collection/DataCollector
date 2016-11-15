@@ -21,7 +21,7 @@ class Blackbox():
 
     def __init__(self):
         rospy.loginfo("init")
-        self.rate = rospy.Rate(10)
+        self.rate = rospy.Rate(2)
         self.black_box_file = open(str(time.ctime()), "a"))
         self.main()
 
@@ -36,6 +36,8 @@ class Blackbox():
 
 
             self.black_box_file.write("/n")
+            self.black_box_file.write("/n")
+
             self.rate.sleep()
            
 
