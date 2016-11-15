@@ -4,6 +4,7 @@ from geometry_msgs.msg import *
 from std_msgs.msg import *
 from mavros_msgs.srv import *
 from mavros_msgs.msg import *
+import time
 
 
 #Author: JJ Marcus
@@ -11,14 +12,17 @@ from mavros_msgs.msg import *
 
 class Master():
     def __init__(self):
-
-        rospy.Subscriber("mavros/local_position/velocity", TwistStamped, self.VelocityVector)
-        velocity_current_linear_vector = [self.velocity_current.twist.linear.x,                      
+        self.velocity_current = TwistStamped()
+        rospy.Subscriber("mavros/local_position/velocity", TwistStamped, self.local_position_velocity_callback)
+        time.sleep(0.1)
+        velocity_current_linear_vector = [self.velocity_current.twist.linear.x,
                                           self.velocity_current.twist.linear.y,
                                           self.velocity_current.twist.linear.z]
-
-        if    (velocity_current_linear_vector[0]^2 + velocity_current_linear_vector[1]^2+
-               velocity_current_linear_vector[2]^2)^0.5 > 0.1:
+        velocity_current_linear_vector_magnitude = ((velocity_current_linear_vector[0]**2 + velocity_current_linear_vector[1]**2+
+               velocity_current_linear_vector[2]**2)**0.5)
+        rospy.loginfo("Error from flow velocity: " + str(velocity_current_linear_vector_magnitude) )
+        rospy.Subscriber("/mavros/state",State,self.state_callback)
+        if     velocity_current_linear_vector_magnitude> 0.015:
            rospy.loginfo("recalibration of FCU nessary: restart Pixhawk")
            rospy.loginfo("breaking loop, you must restart mavros after pixhawk")
 
@@ -47,9 +51,10 @@ class Master():
         rate = rospy.Rate(10)
         # goal altitude
         altitude_goal = 0
+        self.altitude_current = 0
 
         # state variable
-        state = 0
+        stance = 0
         count = 0
         # 0 : logical element
         # 1 : waiting for offb controll
@@ -58,42 +63,40 @@ class Master():
         # 4 : search pattern
 
         while not rospy.is_shutdown():
-            rospy.Subscriber("/mavros/altitude",Altitude,self.altitude_callback)
             count += 1
 
             if count % 100 == 1:
-                rospy.loginfo("State: " + str(state))
-
+                rospy.loginfo("State: " + str(stance))
 
 
 ##########################################################################################
-################# state switch ###########################################################
+################# stance switch ###########################################################
 ##########################################################################################
-            if state == 0:
+            if stance == 0:
 
                 x_linear = 0
                 y_linear = 0
                 z_linear = 0
-     
+
                 x_ang = 0
                 y_ang = 0
                 z_ang = 0
-                
-                state = 1
+
+                stance = 1
 
             # waiting for offb control
-            if state == 1
+            elif stance == 1:
                 countdown = 5
-                rospy.Subscriber("/mavros/state",State,self.state_callback)
+                rate.sleep()
                 if self.state_current.guided:
                     rospy.loginfo("I'm taking control, takeoff in " + str(countdown))
                     countdown -= 0.1
                     if countdown < 0:
                         rospy.loginfo("Switching to Takeoff")
-                        state = 2
+                        stance = 2
 
             # Take off:
-            elif state == 2:
+            elif stance == 2:
                  altitude_goal = 2
                  if count % 10 == 1:
                       rospy.loginfo("Current altitude: " + str(self.altitude_current))
@@ -102,17 +105,18 @@ class Master():
                      countdown -= 0.1
                      if count % 10 == 1:
                           rospy.loginfo("At goal altitude, switching to logic state")
-                  
+                          rospy.loginfo("this isnot coded")
+
                  else:
                      countdown = 5
-                 
+
                  if countdown < 0:
-                     state = 0
+                     stance = 0
 
 
             # Landing
-            elif state == 3:
-                 countdown = 5
+            elif stance == 3:
+                 countdown = 10
                  if count % 10 == 1:
                      rospy.loginfo(self.altitude)
                  z_linear = -0.02
@@ -124,14 +128,13 @@ class Master():
                      state_variable.armed = False
                      state_variable.guided = False
                      state_publisher.publish(state_variable)
-                 
-            elif state == 4:
-                 pass
-            elif state == 5:
-                 pass
-            elif state == 6:
-                 pass
 
+            elif stance == 4:
+                pass
+            elif stance == 5:
+                pass
+            elif stance == 6:
+                pass
 
 
 
@@ -139,13 +142,13 @@ class Master():
 ##########################################################################################
 ################# velocity finder ########################################################
 ##########################################################################################
-            if not state == 3: # If were not landing, this works
+            if not stance == 3: # If were not landing, this works
             # set the verticle speed
-                if self.altitude >= altitude_goal - 0.1 and self.altitude <= goal_altitude + 0.1 :
+                if self.altitude_current >= altitude_goal - 0.1 and self.altitude_current <= altitude_goal + 0.1 :
                     z_linear = 0
-                elif self.altitude > altitude_goal + 0.1:
+                elif self.altitude_current > altitude_goal + 0.1:
                     z_linear = - 0.02
-                elif self.altitude < goal_altitude - 0.1:
+                elif self.altitude_current < altitude_goal - 0.1:
                     z_linear = 0.02
             # need to do this for x_linear, y_linear, and possibly x,y, and z ang
 
@@ -167,7 +170,7 @@ class Master():
             time = rospy.Time.now()
             velocity_vector.header.stamp.secs = int(time.to_sec())
             velocity_vector.header.stamp.nsecs = int((time.to_sec() - int(time.to_sec())) * 1000000000)
-            velocity_vector.header.seq = seq_counter
+            velocity_vector.header.seq = count
 
             # use the publisher
             velocity_publisher.publish(velocity_vector)
@@ -188,14 +191,19 @@ class Master():
 
         if IncomingData[2] > 0.3 and IncomingData[2] < 20:
             self.altitude_current = ( IncomingData[2] )
+
         else:
             self.altitude_current = ( IncomingData[1] - IncomingData[3] )
 
+        return
+
     def local_position_velocity_callback(self,velocity_current):
         self.velocity_current = velocity_current
+        return
 
     def state_callback(self, state):
         self.state_current = state
+        return
 
 
 ##########################################################################################
