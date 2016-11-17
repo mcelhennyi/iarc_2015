@@ -8,7 +8,7 @@ import time
 
 
 #Author: JJ Marcus
-#Last Edit Date: 15/11/2016
+#Last Edit Date: 16/11/2016
 
 class Master():
     def __init__(self):
@@ -50,7 +50,7 @@ class Master():
         # sets the rate of the loop
         rate = rospy.Rate(10)
         # goal altitude
-        altitude_goal = 0
+        altitude_goal = input('what altitude should I hover at?')
         self.altitude_current = 0
 
         # state variable
@@ -86,7 +86,6 @@ class Master():
 
             # waiting for offb control
             elif stance == 1:
-                countdown = 5
                 rate.sleep()
                 if self.state_current.guided:
                     rospy.loginfo("I'm taking control, takeoff in " + str(countdown))
@@ -94,6 +93,8 @@ class Master():
                     if countdown < 0:
                         rospy.loginfo("Switching to Takeoff")
                         stance = 2
+                else:
+                    countdown = 5
 
             # Take off:
             elif stance == 2:
@@ -116,13 +117,15 @@ class Master():
 
             # Landing
             elif stance == 3:
-                 countdown = 10
                  if count % 10 == 1:
                      rospy.loginfo(self.altitude)
                  z_linear = -0.02
                  if self.altitude_current < 0.10:
                      countdown -= 0.1
                      rospy.loginfo("WARNING: low altitude, DISARMING in: " + str(countdown))
+                 else:
+                     countdown = 10
+
                  if self.altitude_current < 0.05 and countdown < 0:
                      rospy.loginfo("DISARM-DISARM-DISARM")
                      state_variable.armed = False
