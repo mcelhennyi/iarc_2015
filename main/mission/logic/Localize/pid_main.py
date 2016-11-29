@@ -10,7 +10,6 @@ class PIDMain():
     def __init__(self):
         # Create a publisher for acceleration data
         self.pub1 = rospy.Publisher('/mavros/setpoint_velocity/cmd_vel', TwistStamped, queue_size=10)
-        self.pub2 = rospy.Publisher('/mavros/setpoint_attitude/cmd_vel', TwistStamped, queue_size=10)
         # set the rate of ros loop
         self.rate = rospy.Rate(10)  # 10hz
         # Create variable for use
@@ -29,8 +28,6 @@ class PIDMain():
             self.subscriber = rospy.Subscriber("/master/control/error", Vector3Stamped, self.callback)
             # publish the accel vector to mavros
             self.pub1.publish(self.vel_twist)  # Vector3Stamped type variable
-            self.pub2.publish(self.vel_twist)  # Vector3Stamped type variable
-
             # sleep the ros rate
             self.rate.sleep()
             #rospy.spin()
