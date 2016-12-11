@@ -8,9 +8,6 @@ from std_msgs.msg import Header
 import math
 from std_msgs.msg import Float64
 
-# Edited on Dec 1 2016 by JJ
-# fixed altitude not being a float issue
-
 
 class CircleDetect():
 
@@ -48,7 +45,9 @@ class CircleDetect():
 
             # Gaussian Blur
             gaussian_blur = cv2.GaussianBlur(gray, (9, 9), 0)
+
             # Get the radius range based off of altitude (alt in meter, radius in pixel)
+
             self.radius = int(-12.1 * math.pow(self.alt, 4) +
             49.188 * math.pow(self.alt, 3) - 21.3 * math.pow(self.alt, 2)
             - 132.26 * self.alt + 176.6)
@@ -102,7 +101,7 @@ class CircleDetect():
         self.cap.release()
 
     def callback(self, altitude):
-        self.alt = float(altitude)
+        self.alt = altitude
 
 if __name__ == '__main__':
     # Initiate the node
