@@ -5,7 +5,7 @@ from std_msgs.msg import *
 from mavros_msgs.srv import *
 from mavros_msgs.msg import *
 import time
-import PID
+from PID import PID
 
 #Author: JJ Marcus
 #Last Edit Date: 28/11/2016
@@ -28,7 +28,7 @@ class Master():
 
         else:
             rospy.loginfo("Starting main loop")
-            self.main()
+            self.main()rospy.loginfo("State: " + str(stance))
 
     def main(self):
         # Creates the publisher for ROS. (name of message, data type(from geometry_msgs.msg), queue size)
@@ -39,7 +39,7 @@ class Master():
         y_linear = 0
         z_linear = 0
 
-        altitude_PID = PID(0.5,0.1,0)
+        altitude_PID = PID(0.5,0.1,0.01)
 
         x_ang = 0
         y_ang = 0
@@ -53,8 +53,8 @@ class Master():
         # sets the rate of the loop
         rate = rospy.Rate(10)
         # goal altitude
-        #altitude_goal = input('what altitude should I hover at?')
-        self.altitude_current = 0
+        altitude_goal = 3
+	self.altitude_current = 0
 
         # state variable
         stance = 0
