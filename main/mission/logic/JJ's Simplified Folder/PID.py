@@ -1,9 +1,10 @@
 import time
 class PID:
-    def __init__(self, P, I, D):
-        self.P = P
-        self.I = I
-        self.D = D
+    def __init__(self, KP, KI, KD, maximum_magnitude):
+        self.KP = KP
+        self.KI = KI
+        self.KD = KD
+        self.maximum_magnitude
         self.previous_error = 0
         self.integral = 0
         self.old_time = time.time()
@@ -18,6 +19,7 @@ class PID:
         # Sets the  integral
         self.integral += error * dt
         # Sets the derivative
+
         derivative = (error - self.previous_error) / dt
         if not self.goal == goal:
             derivative = 0
@@ -25,9 +27,20 @@ class PID:
 
         # Adjusts the output by the constants P, I, and D
         print(str(error) + '  |  ' + str(derivative ) + '  |  ' + str(self.integral))
-        output = ( self.P * error ) + ( self.I * self.integral ) + ( self.D * derivative )
+        output = ( self.KP * error ) + ( self.KI * self.integral ) + ( self.KD * derivative )
+
+        self.magnitude_limits(output, self.maximum_magnitude)
 
         # Sets the previous error
         self.previous_error = error
 
+        return output
+
+    def magnitude_limits(self, output, maximum_magnitude):
+        if output > maximum_magnitude:
+            output = maximum_magnitude
+        elif output < - maximum_magnitude:
+            output = -maximum_magnitude
+        else
+            output = output
         return output
