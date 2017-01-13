@@ -9,7 +9,7 @@ from PID import PID
 class Master():
     def __init__(self):
 
-        # Create PID's for each linear dimension of the quadcopter
+        ############# Create PID's for each linear dimension of the quadcopter
         self.X_PID = PID( 0.3, 0, 0, 1/4)
         self.Y_PID = PID( 0.3, 0, 0, 1/4)
         self.Z_PID = PID( 0.3, 0, 0, 1/3)
@@ -21,50 +21,48 @@ class Master():
         self.offset_vector = [ 0 , 0 , 0 ]
         self.velocity_vector = TwistStamped
 
-        self.main()
+        self.count = 0
 
+
+##########################################################################################
 
     def main(self):
-
-        while not rospy.is_shutdown():
-
-
-
-            ##########################################################################################
-            ################# velocity publisher #####################################################
-            ##########################################################################################
-            #  set linear to value
-            self.velocity_vector.twist.linear.x = x_linear
-            self.velocity_vector.twist.linear.y = y_linear
-            self.velocity_vector.twist.linear.z = z_linear
-
-            # Set angular to zero
-            self.velocity_vector.twist.angular.x = x_ang
-            self.velocity_vector.twist.angular.y = y_ang
-            self.velocity_vector.twist.angular.z = z_ang
-
-            # Get the time now for the velocity commands
-            time = rospy.Time.now()
-            self.velocity_vector.header.stamp.secs = int(time.to_sec())
-            self.velocity_vector.header.stamp.nsecs = int((time.to_sec() - int(time.to_sec())) * 1000000000)
-            self.velocity_vector.header.seq = count
-
-            # use the publisher
-            self.velocity_publisher.publish(self.velocity_vector)
-
-            rate.sleep()
+        pass
 
 ##########################################################################################
 ################# Subscriber Call Backs ##################################################
 ######################################################################
 
     def pid_subscriber_callback(self, subscriber):
+
+
+
         self.pid_subscriber_data = subscriber.data
 
+        ##########################################################################################
+        ################# velocity publisher #####################################################
+        ##########################################################################################
+        #  set linear to value
+        self.velocity_vector.twist.linear.x = x_linear
+        self.velocity_vector.twist.linear.y = y_linear
+        self.velocity_vector.twist.linear.z = z_linear
 
+        # Set angular to zero
+        self.velocity_vector.twist.angular.x = x_ang
+        self.velocity_vector.twist.angular.y = y_ang
+        self.velocity_vector.twist.angular.z = z_ang
 
+        # Get the time now for the velocity commands
+        time = rospy.Time.now()
+        self.velocity_vector.header.stamp.secs = int(time.to_sec())
+        self.velocity_vector.header.stamp.nsecs = int((time.to_sec() - int(time.to_sec())) * 1000000000)
+        self.velocity_vector.header.seq = count
 
-##########################################################################################
+        # use the publisher
+        self.velocity_publisher.publish(self.velocity_vector)
+
+        rate.sleep()
+
 ################# Subscriber Call Backs ##################################################
 ##########################################################################################
 
