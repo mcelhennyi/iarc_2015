@@ -23,15 +23,27 @@ class PIDMain():
         self.old_time = rospy.get_time()
 
         # Create object of PID Controller with tunning arguments
+<<<<<<< HEAD
         self.pid_methods = pid_controller.PIDController(KP=0.5, KI=0.0, KD=0.0)  # PID contants P, I, D
+=======
+        self.pid_methods = pid_controller.PIDController(KP=0.5, KI=0.1, KD=0.1)  # PID contants P, I, D
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
         # runs the loop function
         self.loop_roomba_location()  # Runs roomba subscriber
 
     def loop_roomba_location(self):
         # while the node is still running loop
+<<<<<<< HEAD
         # create and subscribe to the message /roomba/location
         self.subscriber = rospy.Subscriber("/master/control/error", Float64MultiArray, self.callback)
         while not rospy.is_shutdown():
+=======
+        while not rospy.is_shutdown():
+            # create and subscribe to the message /roomba/location
+            self.subscriber = rospy.Subscriber("/master/control/error", Float64MultiArray, self.callback)
+            # publish the accel vector to mavros
+            self.pub1.publish(self.vel_twist)  # Vector3Stamped type variable
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
             # sleep the ros rate
             self.rate.sleep()
             #rospy.spin()
@@ -39,7 +51,11 @@ class PIDMain():
     # runs every time the subcriber above runs
     def callback(self, IncomingData):
         # Method calls that send the XYZ location of the roomba and return xyz acceleration
+<<<<<<< HEAD
         IncomingData = IncomingData.data
+=======
+        IncomingData = IncomingData.data()
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
 
         dt = rospy.get_time() - self.old_time
         self.oldtime = rospy.get_time()
@@ -71,12 +87,16 @@ class PIDMain():
         self.vel_twist.twist.angular.z = 0
 
         # logs the xyz accel data
+<<<<<<< HEAD
         rospy.loginfo("incoming data: " + str(IncomingData))
         rospy.loginfo("outgoing data: " + str(x_vel) + ", " + str(y_vel) + ", "+ str(z_vel))
 
 
         # publish the accel vector to mavros
         self.pub1.publish(self.vel_twist)  # Vector3Stamped type variable
+=======
+        rospy.loginfo(self.vel_twist)
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
 
 
 if __name__ == '__main__':

@@ -28,8 +28,11 @@ class PIDController:
         # Sets the previous error for X
         self.previous_error_x = error_x
 
+<<<<<<< HEAD
         return self.output_x
 
+=======
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
     # PID correction in the Y direction
     def pid_y(self, error_y, dt):
         # Sets the Y integral
@@ -41,8 +44,11 @@ class PIDController:
         # Sets the previous error for Y
         self.previous_error_y = error_y
 
+<<<<<<< HEAD
         return self.output_Y
 
+=======
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
     # PID correction in the Z direction
     def pid_z(self, error_z, dt):
         # Sets the Z integral
@@ -52,6 +58,10 @@ class PIDController:
         # Adjusts the Z output by the constants KP, KI, and KD
         self.output_z = self.KP*error_z + self.KI*self.integral_z + self.KD*derivative_z
         # Sets the previous error for Z
+<<<<<<< HEAD
         self.previous_error_z = error_z
 
         return self.output_z
+=======
+        self.previous_error_z = error_z
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa

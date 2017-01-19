@@ -18,11 +18,19 @@ class Master():
         ################# Program variables
         self.program = [
             [ 0 ],
+<<<<<<< HEAD
             [ 3 ],
             [ 2 , 0.6 ]
         ]
 
         self.program_index = -1
+=======
+            [ 3 , 0.6 ],
+            []
+        ]
+
+        self.program_index = 0
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
         ################
 
         ################ Stance variables
@@ -31,14 +39,27 @@ class Master():
             'Logical_State',
             'Land',
             'Takeoff',
+<<<<<<< HEAD
             'calibrate_fcu',
             'uncoded',
+=======
+            'uncoded',
+            'uncoded',
+            'uncoded',
+            'uncoded',
+            'uncoded',
+            'uncoded',
+            'uncoded'
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
         ]
 
         self.LOGICAL_STANCE = 0
         self.LAND = 1
         self.TAKOFF = 2
+<<<<<<< HEAD
         self.CALIBRATE_FCU = 3
+=======
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
         ################
 
         ################ subscriber threads
@@ -48,6 +69,7 @@ class Master():
         ################
 
         ################ publisher objects and variables
+<<<<<<< HEAD
         self.master_to_pid_publisher = rospy.Publisher("/master/control/error", Float64MultiArray, queue_size=10)
         self.master_to_pid_vector = Float64MultiArray()
         self.master_to_pid_vector.data.append(0)
@@ -83,6 +105,24 @@ class Master():
 
             count += 1
             self.safty_check(count)
+=======
+        self.master_to_pid_vector = rospy.Publisher("/master/control/error", Float64MultiArray, queue_size=10)
+        self.master_to_pid_vector = Float64MultiArray
+        self.PID_ON =  1
+        self.PID_OFF = 0
+        self.state_publisher = rospy.Publisher('mavros/state', State, queue_size = 10)
+        self.state_variable = State()
+        ################
+
+    def main(self):
+
+        count = 0
+
+        while not rospy.is_shutdown():
+
+            count += 1
+            self.safty_checks(count)
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
 
 
             self.x_bool = self.PID_OFF
@@ -92,7 +132,10 @@ class Master():
             self.x_linear = 0
             self.y_linear = 0
             self.z_linear = 0
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
             if self.stance == self.LOGICAL_STANCE:
                 self.Logical_State()
 
@@ -102,6 +145,7 @@ class Master():
             elif self.stance == self.TAKOFF: # Takeoff
                 self.Takeoff(self.program[self.program_index][2])
 
+<<<<<<< HEAD
             elif self.stance == self.CALIBRATE_FCU:
                 self.calibrate_fcu()
 
@@ -123,6 +167,16 @@ class Master():
             self.master_to_pid_publisher.publish(self.master_to_pid_vector)
 
             print('-----------')
+=======
+
+
+
+
+
+            self.stance_previous = self.stance
+
+            self.velocity_publisher.publish(self.velocity_vector)
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
     ##########################################################################################
     ################# state functions ########################################################
     ##########################################################################################
@@ -132,8 +186,12 @@ class Master():
 
 
         self.program_index += 1
+<<<<<<< HEAD
 
         if self.program_index >= len(self.program):
+=======
+        if self.program_index > len(self.program):
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
             self.stance = self.LAND
         else:
             self.stance = self.program[self.program_index][0]
@@ -192,6 +250,7 @@ class Master():
     ###################################
     def calibrate_fcu(self):
 
+<<<<<<< HEAD
         self.calibration_count = 0
         self.calibration_nessary = 10
 
@@ -220,6 +279,8 @@ class Master():
             self.stance = 0
 
 
+=======
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
         self.x_bool = self.PID_OFF
         self.y_bool = self.PID_OFF
         self.z_bool = self.PID_OFF
@@ -234,6 +295,7 @@ class Master():
     ################# various functions ######################################################
     ##########################################################################################
 
+<<<<<<< HEAD
     def safty_check(self, count):
         if not self.state_current.guided:
             self.stance = 0
@@ -241,6 +303,15 @@ class Master():
         if (count % 20) == 1:
             rospy.loginfo("Current stance: " + str(self.stance_names[self.stance]))
             rospy.loginfo("Current altitude: " + str(self.altitude_current))
+=======
+    def safty_checsk(self, count):
+        if not self.state_current.guided:
+            self.stance = 0
+
+        if count % 20 = 1:
+            rospy.loginfo("Current stance: " + str(self.stance_names(self.stance)))
+            rospy.loginfo("Current altitude: " + self.altitude_current)
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
 
         # Add a velocity magnitude HARD limit
 
@@ -259,7 +330,11 @@ class Master():
             self.altitude_current = ( IncomingData.relative )
 
         else:
+<<<<<<< HEAD
             self.altitude_current = ( IncomingData.amsl - IncomingData.terrain )
+=======
+            self.altitude_current = ( IncomingData.asml - IncomingData.terrain )
+>>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
 
     def local_position_velocity_callback(self,velocity_current):
         self.velocity_current = velocity_current
