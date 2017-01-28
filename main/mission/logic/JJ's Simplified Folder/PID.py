@@ -41,10 +41,6 @@ class PID:
             output = maximum_magnitude
         elif output < - maximum_magnitude:
             output = -maximum_magnitude
-<<<<<<< HEAD
         else:
-=======
-        else
->>>>>>> 8bd0cf6e4dac856a1b7b0722fba39b7adf52e2fa
             output = output
         return output

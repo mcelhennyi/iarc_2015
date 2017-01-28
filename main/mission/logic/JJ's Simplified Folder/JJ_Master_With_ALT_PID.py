@@ -28,7 +28,7 @@ class Master():
 
         else:
             rospy.loginfo("Starting main loop")
-            self.main()rospy.loginfo("State: " + str(stance))
+            self.main()
 
     def main(self):
         # Creates the publisher for ROS. (name of message, data type(from geometry_msgs.msg), queue size)
@@ -39,7 +39,7 @@ class Master():
         y_linear = 0
         z_linear = 0
 
-        altitude_PID = PID(0.5,0.1,0.01)
+        altitude_PID = PID(0.5,0,0)
 
         x_ang = 0
         y_ang = 0
@@ -110,7 +110,6 @@ class Master():
                      countdown -= 0.1
                      if count % 10 == 1:
                           rospy.loginfo("At goal altitude, switching to logic state")
-                          stance_previous = 2
                           stance = 0
 
                  else:
