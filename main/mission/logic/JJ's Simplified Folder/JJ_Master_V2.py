@@ -31,13 +31,6 @@ class Master():
             'Land',
             'Takeoff',
             'calibrate_fcu',
-            'uncoded',
-            'uncoded',
-            'uncoded',
-            'uncoded',
-            'uncoded',
-            'uncoded',
-            'uncoded',
             'uncoded'
 
         ]
@@ -51,9 +44,9 @@ class Master():
         ################
 
         ################ subscriber threads
-        rospy.Subscriber("mavros/local_position/velocity", TwistStamped, self.local_position_velocity_callback)
-        rospy.Subscriber("mavros/altitude", Altitude, self.altitude_callback)
-        rospy.Subscriber("/mavros/state",State,self.state_callback)
+        rospy.Subscriber("mavros/local_position/velocity",  TwistStamped,   self.local_position_velocity_callback)
+        rospy.Subscriber("mavros/altitude",                 Altitude,       self.altitude_callback)
+        rospy.Subscriber("/mavros/state",                   State,          self.state_callback)
         ################
 
         ################ publisher objects and variables
@@ -85,25 +78,11 @@ class Master():
 
         self.main()
 
-    def main(self):
 
+    ###################################
+    def main(self):
         count = 0
         rospy.loginfo('beginning loop')
-        while not rospy.is_shutdown():
-
-            count += 1
-            self.safty_check(count)
-        self.master_to_pid_vector = rospy.Publisher("/master/control/error", Float64MultiArray, queue_size=10)
-        self.master_to_pid_vector = Float64MultiArray
-        self.PID_ON =  1
-        self.PID_OFF = 0
-        self.state_publisher = rospy.Publisher('mavros/state', State, queue_size = 10)
-        self.state_variable = State()
-
-    def main(self):
-
-        count = 0
-
         while not rospy.is_shutdown():
 
             count += 1
@@ -123,7 +102,7 @@ class Master():
             elif self.stance == self.LAND:
                 self.Land()
 
-            elif self.stance == self.TAKOFF
+            elif self.stance == self.TAKOFF:
                 self.Takeoff(self.program[self.program_index][2])
 
             elif self.stance == self.CALIBRATE_FCU:
@@ -132,12 +111,14 @@ class Master():
             self.master_to_pid_vector.data[0] = self.x_bool
             self.master_to_pid_vector.data[1] = self.y_bool
             self.master_to_pid_vector.data[2] = self.z_bool
+            '''
             if self.x_bool == self.PID_OFF:
-                self.x_linear - self.x_velocity_offset
+                self.x_linear -= self.x_velocity_offset
             if self.y_bool == self.PID_OFF:
-                self.y_linear - self.y_velocity_offset
+                self.y_linear -= self.y_velocity_offset
             if self.z_bool == self.PID_OFF:
-                self.z_linear - self.z_velocity_offset
+                self.z_linear -= self.
+            ''' # unnessary if FCU does not have a stupid offset, which it shouldn't
             self.master_to_pid_vector.data[3] = self.x_linear
             self.master_to_pid_vector.data[4] = self.y_linear
             self.master_to_pid_vector.data[5] = self.z_linear
@@ -147,14 +128,14 @@ class Master():
             self.master_to_pid_publisher.publish(self.master_to_pid_vector)
 
             print('-----------')
+    ###################################
+
     ##########################################################################################
     ################# state functions ########################################################
     ##########################################################################################
 
     ###################################
     def Logical_State(self):
-
-
         self.program_index += 1
 
         if self.program_index > len(self.program):
@@ -185,17 +166,14 @@ class Master():
             countdown = 10
 
         if ( self.altitude_current < 0.05 or self.altitude_current < 0 ) and countdown < 0:
-            rospy.loginfo("DISARM-DISARM-DISARM")
-            self.state_variable.armed = False
-            self.state_variable.guided = False
-            self.state_publisher.publish(self.state_variable)
+            self.disarm()
 
         self.x_bool = self.PID_OFF
-        self.y_bool = self.PID_ON
+        self.y_bool = self.PID_OFF
         self.z_bool = self.PID_OFF
 
         self.x_linear = 0
-        self.y_linear = 0.05
+        self.y_linear = -0.1
         self.z_linear = 0
     ###################################
 
@@ -213,7 +191,7 @@ class Master():
     ###################################
 
 
-    ###################################
+    ################################### THIS SHOULDNT BE NESSARY ANYMORE
     def calibrate_fcu(self):
 
         self.calibration_count = 0
@@ -257,46 +235,61 @@ class Master():
     ################# various functions ######################################################
     ##########################################################################################
 
+    ###################################
     def safty_check(self, count):
         if not self.state_current.guided:
             self.stance = 0
 
-        if (count % 20) == 1:
-            rospy.loginfo("Current stance: " + str(self.stance_names[self.stance]))
-            rospy.loginfo("Current altitude: " + str(self.altitude_current))
+        if (count % 20) == 1 or not self.stance_previous == self.stance:
+            rospy.loginfo("Current stance: " +          str(self.stance_names[self.stance]))
+            rospy.loginfo("Current altitude: " +        str(self.altitude_current))
+            rospy.loginfo("Current ground speed: " +    str(self.velocity_current_magnitude))
 
-    def safty_checsk(self, count):
-        if not self.state_current.guided:
-            self.stance = 0
-
-        if count % 20 = 1:
-            rospy.loginfo("Current stance: " + str(self.stance_names(self.stance)))
-            rospy.loginfo("Current altitude: " + self.altitude_current)
+        if self.velocity_current_magnitude > 10:
+            self.disarm()
+    ###################################
 
 
-        # Add a velocity magnitude HARD limit
-
+    ###################################
     def maintain_altitude(self, altitude_goal):
         return self.altitude_current - altitude_goal
+    ###################################
 
+    ###################################
+    def disarm(self):
+        while True:
+            rospy.loginfo("DISARM-DISARM-DISARM")
+            rospy.logwarn("DISARM-DISARM-DISARM")
+            rospy.logfatal("DISARM-DISARM-DISARM")
+            self.state_variable.armed = False
+            self.state_variable.guided = False
+            self.state_publisher.publish(self.state_variable)
+    ###################################
 
     ##########################################################################################
     ################# Subscriber Call Backs ##################################################
     ##########################################################################################
 
+    ###################################
     def altitude_callback(self, IncomingData):
 
         if IncomingData.relative > 0.3 and IncomingData.relative < 20:
             self.altitude_current = ( IncomingData.relative )
         else:
             self.altitude_current = ( IncomingData.amsl - IncomingData.terrain )
+    ###################################
 
-
+    ###################################
     def local_position_velocity_callback(self,velocity_current):
         self.velocity_current = velocity_current
+        self.velocity_current_magnitude = (velocity_current.linear.x^2 + velocity_current.linear.y^2)^0.5
+    ###################################
 
+    ###################################
     def state_callback(self, state):
         self.state_current = state
+    ###################################
+    ###################################
 
 ##########################################################################################
 ################# Subscriber Call Backs ##################################################
