@@ -18,8 +18,9 @@ class Master():
         ################# Program variables
         self.program = [
             [ 0 ],
-            [ 3 ],
-            [ 3 , 0.6 ]
+            [ 2 ],
+            [ 4 ],
+            [ 1 ]
         ]
         self.program_index = -1
         ################
@@ -27,19 +28,21 @@ class Master():
         ################ Stance variables
         self.stance = 0
         self.stance_names = [
-            'Logical_State',
-            'Land',
-            'Takeoff',
-            'calibrate_fcu',
-            'uncoded'
+            'Logical_State',        # 0
+            'Land',                 # 1
+            'Takeoff',              # 2
+            'calibrate_fcu',        # 3
+            'localize_to_roomba'    # 4
 
         ]
 
         self.LOGICAL_STANCE = 0
         self.LAND = 1
         self.TAKOFF = 2
-
         self.CALIBRATE_FCU = 3
+        self.LOCALIZE_TO_ROOMBA = 4
+
+
 
         ################
 
@@ -177,7 +180,6 @@ class Master():
         self.z_linear = 0
     ###################################
 
-
     ###################################
     def takeoff(self, goal_altitude):
 
@@ -189,7 +191,6 @@ class Master():
         self.y_linear = self.maintain_altitude(goal_altitude)
         self.z_linear = 0
     ###################################
-
 
     ################################### THIS SHOULDNT BE NESSARY ANYMORE
     def calibrate_fcu(self):
@@ -230,7 +231,6 @@ class Master():
         self.z_linear = 0
     ###################################
 
-
     ##########################################################################################
     ################# various functions ######################################################
     ##########################################################################################
@@ -248,7 +248,6 @@ class Master():
         if self.velocity_current_magnitude > 10:
             self.disarm()
     ###################################
-
 
     ###################################
     def maintain_altitude(self, altitude_goal):

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8a2a6bf2-ec69-4756-b3e0-79aab4807e8d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_V2.py" afterPath="$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_V2.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -80,21 +79,14 @@
       <file leaf-file-name="JJ_Master_V2.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_V2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="191" column="0" lean-forward="false" selection-start-line="191" selection-start-column="0" selection-end-line="191" selection-end-column="0" />
+            <state relative-caret-position="238">
+              <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="34" selection-end-column="6" />
               <folding>
-                <element signature="e#22#34#0" expanded="true" />
-                <element signature="e#2165#3801#0" expanded="false" />
-                <element signature="e#3080#3382#0" expanded="false" />
-                <element signature="e#4201#4574#0" expanded="false" />
-                <element signature="e#4685#5284#0" expanded="false" />
-                <element signature="e#5414#5624#0" expanded="false" />
-                <element signature="e#5778#6852#0" expanded="false" />
-                <element signature="e#7263#7750#0" expanded="false" />
-                <element signature="e#7884#7928#0" expanded="false" />
-                <element signature="e#8040#8362#0" expanded="false" />
-                <element signature="e#8781#9005#0" expanded="false" />
-                <element signature="e#9155#9301#0" expanded="false" />
+                <element signature="e#4328#4701#0" expanded="false" />
+                <element signature="e#4812#5411#0" expanded="false" />
+                <element signature="e#5540#5750#0" expanded="false" />
+                <element signature="e#5903#6977#0" expanded="false" />
+                <element signature="e#7387#7874#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -103,7 +95,7 @@
       <file leaf-file-name="JJ_Master_With_ALT_PID.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_With_ALT_PID.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1215">
+            <state relative-caret-position="921">
               <caret line="87" column="26" lean-forward="false" selection-start-line="87" selection-start-column="26" selection-end-line="87" selection-end-column="26" />
               <folding />
             </state>
@@ -148,10 +140,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="414" />
-    <option name="y" value="224" />
-    <option name="width" value="930" />
-    <option name="height" value="998" />
+    <option name="x" value="39" />
+    <option name="y" value="-4" />
+    <option name="width" value="1881" />
+    <option name="height" value="1084" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -472,10 +464,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="414" y="224" width="930" height="998" extended-state="1" />
-    <editor active="true" />
+    <frame x="39" y="-4" width="1881" height="1084" extended-state="6" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27741936" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13716109" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925585" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -506,7 +498,7 @@
           <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="22" />
+      <option name="time" value="26" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -544,18 +536,11 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#2165#3801#0" expanded="false" />
-            <element signature="e#3080#3382#0" expanded="false" />
-            <element signature="e#4201#4574#0" expanded="false" />
-            <element signature="e#4685#5284#0" expanded="false" />
-            <element signature="e#5414#5624#0" expanded="false" />
-            <element signature="e#5778#6852#0" expanded="false" />
-            <element signature="e#7263#7750#0" expanded="false" />
-            <element signature="e#7884#7928#0" expanded="false" />
-            <element signature="e#8040#8362#0" expanded="false" />
-            <element signature="e#8781#9005#0" expanded="false" />
-            <element signature="e#9155#9301#0" expanded="false" />
+            <element signature="e#4328#4701#0" expanded="false" />
+            <element signature="e#4812#5411#0" expanded="false" />
+            <element signature="e#5540#5750#0" expanded="false" />
+            <element signature="e#5903#6977#0" expanded="false" />
+            <element signature="e#7387#7874#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -619,18 +604,11 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#2165#3801#0" expanded="false" />
-            <element signature="e#3080#3382#0" expanded="false" />
-            <element signature="e#4201#4574#0" expanded="false" />
-            <element signature="e#4685#5284#0" expanded="false" />
-            <element signature="e#5414#5624#0" expanded="false" />
-            <element signature="e#5778#6852#0" expanded="false" />
-            <element signature="e#7263#7750#0" expanded="false" />
-            <element signature="e#7884#7928#0" expanded="false" />
-            <element signature="e#8040#8362#0" expanded="false" />
-            <element signature="e#8781#9005#0" expanded="false" />
-            <element signature="e#9155#9301#0" expanded="false" />
+            <element signature="e#4328#4701#0" expanded="false" />
+            <element signature="e#4812#5411#0" expanded="false" />
+            <element signature="e#5540#5750#0" expanded="false" />
+            <element signature="e#5903#6977#0" expanded="false" />
+            <element signature="e#7387#7874#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -674,18 +652,11 @@
         <state relative-caret-position="1425">
           <caret line="101" column="47" lean-forward="false" selection-start-line="101" selection-start-column="47" selection-end-line="101" selection-end-column="47" />
           <folding>
-            <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#2165#3801#0" expanded="false" />
-            <element signature="e#3080#3382#0" expanded="false" />
-            <element signature="e#4201#4574#0" expanded="false" />
-            <element signature="e#4685#5284#0" expanded="false" />
-            <element signature="e#5414#5624#0" expanded="false" />
-            <element signature="e#5778#6852#0" expanded="false" />
-            <element signature="e#7263#7750#0" expanded="false" />
-            <element signature="e#7884#7928#0" expanded="false" />
-            <element signature="e#8040#8362#0" expanded="false" />
-            <element signature="e#8781#9005#0" expanded="false" />
-            <element signature="e#9155#9301#0" expanded="false" />
+            <element signature="e#4328#4701#0" expanded="false" />
+            <element signature="e#4812#5411#0" expanded="false" />
+            <element signature="e#5540#5750#0" expanded="false" />
+            <element signature="e#5903#6977#0" expanded="false" />
+            <element signature="e#7387#7874#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -721,18 +692,11 @@
         <state relative-caret-position="1440">
           <caret line="102" column="18" lean-forward="false" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
           <folding>
-            <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#2165#3801#0" expanded="false" />
-            <element signature="e#3080#3382#0" expanded="false" />
-            <element signature="e#4201#4574#0" expanded="false" />
-            <element signature="e#4685#5284#0" expanded="false" />
-            <element signature="e#5414#5624#0" expanded="false" />
-            <element signature="e#5778#6852#0" expanded="false" />
-            <element signature="e#7263#7750#0" expanded="false" />
-            <element signature="e#7884#7928#0" expanded="false" />
-            <element signature="e#8040#8362#0" expanded="false" />
-            <element signature="e#8781#9005#0" expanded="false" />
-            <element signature="e#9155#9301#0" expanded="false" />
+            <element signature="e#4328#4701#0" expanded="false" />
+            <element signature="e#4812#5411#0" expanded="false" />
+            <element signature="e#5540#5750#0" expanded="false" />
+            <element signature="e#5903#6977#0" expanded="false" />
+            <element signature="e#7387#7874#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -947,14 +911,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_With_ALT_PID.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1215">
-          <caret line="87" column="26" lean-forward="false" selection-start-line="87" selection-start-column="26" selection-end-line="87" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mission/logic/competition_master.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3975">
@@ -965,23 +921,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_With_ALT_PID.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="921">
+          <caret line="87" column="26" lean-forward="false" selection-start-line="87" selection-start-column="26" selection-end-line="87" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_V2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="191" column="0" lean-forward="false" selection-start-line="191" selection-start-column="0" selection-end-line="191" selection-end-column="0" />
+        <state relative-caret-position="238">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="34" selection-end-column="6" />
           <folding>
-            <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#2165#3801#0" expanded="false" />
-            <element signature="e#3080#3382#0" expanded="false" />
-            <element signature="e#4201#4574#0" expanded="false" />
-            <element signature="e#4685#5284#0" expanded="false" />
-            <element signature="e#5414#5624#0" expanded="false" />
-            <element signature="e#5778#6852#0" expanded="false" />
-            <element signature="e#7263#7750#0" expanded="false" />
-            <element signature="e#7884#7928#0" expanded="false" />
-            <element signature="e#8040#8362#0" expanded="false" />
-            <element signature="e#8781#9005#0" expanded="false" />
-            <element signature="e#9155#9301#0" expanded="false" />
+            <element signature="e#4328#4701#0" expanded="false" />
+            <element signature="e#4812#5411#0" expanded="false" />
+            <element signature="e#5540#5750#0" expanded="false" />
+            <element signature="e#5903#6977#0" expanded="false" />
+            <element signature="e#7387#7874#0" expanded="false" />
           </folding>
         </state>
       </provider>
