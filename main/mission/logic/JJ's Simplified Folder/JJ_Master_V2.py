@@ -32,15 +32,16 @@ class Master():
             'Land',                 # 1
             'Takeoff',              # 2
             'calibrate_fcu',        # 3
-            'localize_to_roomba'    # 4
+            'hover_over_romba'      # 4
+
 
         ]
 
-        self.LOGICAL_STANCE = 0
-        self.LAND = 1
-        self.TAKOFF = 2
-        self.CALIBRATE_FCU = 3
-        self.LOCALIZE_TO_ROOMBA = 4
+        self.LOGICAL_STANCE =       0
+        self.LAND =                 1
+        self.TAKOFF =               2
+        self.CALIBRATE_FCU =        3
+        self.HOVER_OVER_ROOMBA =    4
 
 
 
@@ -229,6 +230,12 @@ class Master():
         self.x_linear = 0
         self.y_linear = 0
         self.z_linear = 0
+    ###################################
+
+    ###################################
+    def hover_over_roomba(self):
+
+
     ###################################
 
     ##########################################################################################

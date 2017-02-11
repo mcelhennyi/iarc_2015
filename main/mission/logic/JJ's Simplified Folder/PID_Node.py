@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import rospy
 from PID import PID
+from geometry_msgs.msg import TwistStamped
 
 
 # Author: JJ Marcus
@@ -25,17 +26,16 @@ class Master():
 
 
 ##########################################################################################
-
     def main(self):
         pass
 
 ##########################################################################################
 ################# Subscriber Call Backs ##################################################
-######################################################################
+##########################################################################################
 
     def pid_subscriber_callback(self, subscriber):
 
-
+        self.count += 1
 
         self.pid_subscriber_data = subscriber.data
 
@@ -56,13 +56,14 @@ class Master():
         time = rospy.Time.now()
         self.velocity_vector.header.stamp.secs = int(time.to_sec())
         self.velocity_vector.header.stamp.nsecs = int((time.to_sec() - int(time.to_sec())) * 1000000000)
-        self.velocity_vector.header.seq = count
+        self.velocity_vector.header.seq = self.count
 
         # use the publisher
         self.velocity_publisher.publish(self.velocity_vector)
 
-        rate.sleep()
+        rospy.rate.sleep()
 
+##########################################################################################
 ################# Subscriber Call Backs ##################################################
 ##########################################################################################
 
