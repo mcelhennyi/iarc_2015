@@ -51,6 +51,7 @@ class Master():
         rospy.Subscriber("mavros/local_position/velocity",  TwistStamped,   self.local_position_velocity_callback)
         rospy.Subscriber("mavros/altitude",                 Altitude,       self.altitude_callback)
         rospy.Subscriber("/mavros/state",                   State,          self.state_callback)
+        rospy.Subscriber("  ",                              PoseArray,  self.roomba_location_callback)
         ################
 
         ################ publisher objects and variables
@@ -234,8 +235,13 @@ class Master():
 
     ###################################
     def hover_over_roomba(self):
+        self.x_bool = self.PID_ON
+        self.y_bool = self.PID_ON
+        self.z_bool = self.PID_ON
 
-
+        self.x_linear = 0
+        self.y_linear = self.maintain_altitude(goal_altitude)
+        self.z_linear = 0
     ###################################
 
     ##########################################################################################
@@ -295,6 +301,11 @@ class Master():
     def state_callback(self, state):
         self.state_current = state
     ###################################
+
+    ###################################
+    def roomba_location_callback(self, location):
+
+
     ###################################
 
 ##########################################################################################

@@ -4,8 +4,6 @@
     <list default="true" id="8a2a6bf2-ec69-4756-b3e0-79aab4807e8d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_V2.py" afterPath="$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_V2.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/PID_Node.py" afterPath="$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/PID_Node.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mission/logic/Localize/pid_controller.py" afterPath="$PROJECT_DIR$/mission/logic/Localize/pid_controller.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,96 +21,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="competition_master.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mission/logic/competition_master.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="411">
-              <caret line="275" column="30" lean-forward="false" selection-start-line="275" selection-start-column="30" selection-end-line="275" selection-end-column="30" />
-              <folding>
-                <element signature="e#22#34#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pid_controller.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mission/logic/Localize/pid_controller.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="32" column="38" lean-forward="false" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pid_main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mission/logic/Localize/pid_main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="12" lean-forward="false" selection-start-line="1" selection-start-column="12" selection-end-line="2" selection-end-column="42" />
-              <folding>
-                <marker date="1485813368039" expanded="true" signature="2857:2895" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PID_Node.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/PID_Node.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="53" lean-forward="true" selection-start-line="19" selection-start-column="53" selection-end-line="19" selection-end-column="53" />
-              <folding>
-                <element signature="e#22#34#0" expanded="true" />
-                <element signature="e#862#866#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PID.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/PID.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JJ_Master_V2.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="JJ_Master_V2.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_V2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1575">
-              <caret line="236" column="0" lean-forward="false" selection-start-line="236" selection-start-column="0" selection-end-line="236" selection-end-column="0" />
+            <state relative-caret-position="381">
+              <caret line="54" column="24" lean-forward="true" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="24" />
               <folding>
-                <element signature="e#2338#3974#0" expanded="false" />
-                <element signature="e#4374#4747#0" expanded="false" />
-                <element signature="e#4858#5457#0" expanded="false" />
-                <element signature="e#5586#5796#0" expanded="false" />
-                <element signature="e#5949#7023#0" expanded="false" />
-                <element signature="e#7549#8036#0" expanded="false" />
-                <element signature="e#8325#8647#0" expanded="false" />
+                <element signature="e#2441#4077#0" expanded="false" />
+                <element signature="e#4477#4850#0" expanded="false" />
+                <element signature="e#4961#5560#0" expanded="false" />
+                <element signature="e#5689#5899#0" expanded="false" />
+                <element signature="e#6052#7126#0" expanded="false" />
+                <element signature="e#7867#8354#0" expanded="false" />
+                <element signature="e#8643#8965#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="roomba_tracking2.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mission/vision/Track_Roomba/roomba_tracking2.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-330">
-              <caret line="14" column="3" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="circle_detect.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="circle_detect.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mission/vision/Track_Roomba/circle_detect.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="30" selection-end-column="3" />
+            <state relative-caret-position="165">
+              <caret line="18" column="71" lean-forward="false" selection-start-line="18" selection-start-column="62" selection-end-line="18" selection-end-column="71" />
               <folding />
             </state>
           </provider>
@@ -121,7 +52,7 @@
       <file leaf-file-name="JJ_Master_With_ALT_PID.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_With_ALT_PID.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1215">
+            <state relative-caret-position="921">
               <caret line="87" column="26" lean-forward="false" selection-start-line="87" selection-start-column="26" selection-end-line="87" selection-end-column="26" />
               <folding />
             </state>
@@ -166,10 +97,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="39" />
-    <option name="y" value="-4" />
-    <option name="width" value="1881" />
-    <option name="height" value="1084" />
+    <option name="x" value="268" />
+    <option name="y" value="158" />
+    <option name="width" value="930" />
+    <option name="height" value="998" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -188,7 +119,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -319,6 +249,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -512,10 +443,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="39" y="-4" width="1881" height="1084" extended-state="6" />
-    <editor active="true" />
+    <frame x="268" y="158" width="930" height="998" extended-state="1" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19457735" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925585" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -566,7 +497,7 @@
         <state relative-caret-position="540">
           <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
           <folding>
-            <element signature="e#22#34#0" expanded="true" />
+            <element signature="e#22#34#0" expanded="false" />
             <element signature="e#862#866#0" expanded="false" />
           </folding>
         </state>
@@ -585,13 +516,13 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2338#3974#0" expanded="false" />
-            <element signature="e#4374#4747#0" expanded="false" />
-            <element signature="e#4858#5457#0" expanded="false" />
-            <element signature="e#5586#5796#0" expanded="false" />
-            <element signature="e#5949#7023#0" expanded="false" />
-            <element signature="e#7549#8036#0" expanded="false" />
-            <element signature="e#8325#8647#0" expanded="false" />
+            <element signature="e#2441#4077#0" expanded="false" />
+            <element signature="e#4477#4850#0" expanded="false" />
+            <element signature="e#4961#5560#0" expanded="false" />
+            <element signature="e#5689#5899#0" expanded="false" />
+            <element signature="e#6052#7126#0" expanded="false" />
+            <element signature="e#7867#8354#0" expanded="false" />
+            <element signature="e#8643#8965#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -637,7 +568,7 @@
         <state relative-caret-position="540">
           <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
           <folding>
-            <element signature="e#22#34#0" expanded="true" />
+            <element signature="e#22#34#0" expanded="false" />
             <element signature="e#862#866#0" expanded="false" />
           </folding>
         </state>
@@ -656,13 +587,13 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2338#3974#0" expanded="false" />
-            <element signature="e#4374#4747#0" expanded="false" />
-            <element signature="e#4858#5457#0" expanded="false" />
-            <element signature="e#5586#5796#0" expanded="false" />
-            <element signature="e#5949#7023#0" expanded="false" />
-            <element signature="e#7549#8036#0" expanded="false" />
-            <element signature="e#8325#8647#0" expanded="false" />
+            <element signature="e#2441#4077#0" expanded="false" />
+            <element signature="e#4477#4850#0" expanded="false" />
+            <element signature="e#4961#5560#0" expanded="false" />
+            <element signature="e#5689#5899#0" expanded="false" />
+            <element signature="e#6052#7126#0" expanded="false" />
+            <element signature="e#7867#8354#0" expanded="false" />
+            <element signature="e#8643#8965#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -696,7 +627,7 @@
         <state relative-caret-position="225">
           <caret line="16" column="115" lean-forward="false" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="115" />
           <folding>
-            <element signature="e#22#34#0" expanded="true" />
+            <element signature="e#22#34#0" expanded="false" />
             <element signature="e#862#866#0" expanded="false" />
           </folding>
         </state>
@@ -707,13 +638,13 @@
         <state relative-caret-position="1425">
           <caret line="101" column="47" lean-forward="false" selection-start-line="101" selection-start-column="47" selection-end-line="101" selection-end-column="47" />
           <folding>
-            <element signature="e#2338#3974#0" expanded="false" />
-            <element signature="e#4374#4747#0" expanded="false" />
-            <element signature="e#4858#5457#0" expanded="false" />
-            <element signature="e#5586#5796#0" expanded="false" />
-            <element signature="e#5949#7023#0" expanded="false" />
-            <element signature="e#7549#8036#0" expanded="false" />
-            <element signature="e#8325#8647#0" expanded="false" />
+            <element signature="e#2441#4077#0" expanded="false" />
+            <element signature="e#4477#4850#0" expanded="false" />
+            <element signature="e#4961#5560#0" expanded="false" />
+            <element signature="e#5689#5899#0" expanded="false" />
+            <element signature="e#6052#7126#0" expanded="false" />
+            <element signature="e#7867#8354#0" expanded="false" />
+            <element signature="e#8643#8965#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -739,7 +670,7 @@
         <state relative-caret-position="225">
           <caret line="16" column="115" lean-forward="false" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="115" />
           <folding>
-            <element signature="e#22#34#0" expanded="true" />
+            <element signature="e#22#34#0" expanded="false" />
             <element signature="e#862#866#0" expanded="false" />
           </folding>
         </state>
@@ -750,13 +681,13 @@
         <state relative-caret-position="1440">
           <caret line="102" column="18" lean-forward="false" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
           <folding>
-            <element signature="e#2338#3974#0" expanded="false" />
-            <element signature="e#4374#4747#0" expanded="false" />
-            <element signature="e#4858#5457#0" expanded="false" />
-            <element signature="e#5586#5796#0" expanded="false" />
-            <element signature="e#5949#7023#0" expanded="false" />
-            <element signature="e#7549#8036#0" expanded="false" />
-            <element signature="e#8325#8647#0" expanded="false" />
+            <element signature="e#2441#4077#0" expanded="false" />
+            <element signature="e#4477#4850#0" expanded="false" />
+            <element signature="e#4961#5560#0" expanded="false" />
+            <element signature="e#5689#5899#0" expanded="false" />
+            <element signature="e#6052#7126#0" expanded="false" />
+            <element signature="e#7867#8354#0" expanded="false" />
+            <element signature="e#8643#8965#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -928,22 +859,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_With_ALT_PID.py">
+    <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/PID_Node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1215">
-          <caret line="87" column="26" lean-forward="false" selection-start-line="87" selection-start-column="26" selection-end-line="87" selection-end-column="26" />
-          <folding />
+        <state relative-caret-position="255">
+          <caret line="19" column="53" lean-forward="false" selection-start-line="19" selection-start-column="53" selection-end-line="19" selection-end-column="53" />
+          <folding>
+            <element signature="e#22#34#0" expanded="false" />
+            <element signature="e#862#866#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/PID_Node.py">
+    <entry file="file://$PROJECT_DIR$/mission/logic/Localize/pid_controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="53" lean-forward="true" selection-start-line="19" selection-start-column="53" selection-end-line="19" selection-end-column="53" />
-          <folding>
-            <element signature="e#22#34#0" expanded="true" />
-            <element signature="e#862#866#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="480">
+          <caret line="32" column="38" lean-forward="false" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -957,14 +888,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mission/logic/Localize/pid_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="38" lean-forward="false" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mission/logic/competition_master.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="411">
@@ -975,35 +898,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_V2.py">
+    <entry file="file://$PROJECT_DIR$/mission/vision/Track_Roomba/roomba_tracking2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1575">
-          <caret line="236" column="0" lean-forward="false" selection-start-line="236" selection-start-column="0" selection-end-line="236" selection-end-column="0" />
-          <folding>
-            <element signature="e#2338#3974#0" expanded="false" />
-            <element signature="e#4374#4747#0" expanded="false" />
-            <element signature="e#4858#5457#0" expanded="false" />
-            <element signature="e#5586#5796#0" expanded="false" />
-            <element signature="e#5949#7023#0" expanded="false" />
-            <element signature="e#7549#8036#0" expanded="false" />
-            <element signature="e#8325#8647#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="15">
+          <caret line="14" column="3" lean-forward="false" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mission/vision/Track_Roomba/roomba_tracking2.py">
+    <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_With_ALT_PID.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-330">
-          <caret line="14" column="3" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+        <state relative-caret-position="921">
+          <caret line="87" column="26" lean-forward="false" selection-start-line="87" selection-start-column="26" selection-end-line="87" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mission/vision/Track_Roomba/circle_detect.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="30" selection-end-column="3" />
+        <state relative-caret-position="165">
+          <caret line="18" column="71" lean-forward="false" selection-start-line="18" selection-start-column="62" selection-end-line="18" selection-end-column="71" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mission/logic/JJ's Simplified Folder/JJ_Master_V2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="54" column="24" lean-forward="true" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="24" />
+          <folding>
+            <element signature="e#2441#4077#0" expanded="false" />
+            <element signature="e#4477#4850#0" expanded="false" />
+            <element signature="e#4961#5560#0" expanded="false" />
+            <element signature="e#5689#5899#0" expanded="false" />
+            <element signature="e#6052#7126#0" expanded="false" />
+            <element signature="e#7867#8354#0" expanded="false" />
+            <element signature="e#8643#8965#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
