@@ -5,8 +5,8 @@ import rospy
 from geometry_msgs.msg import Pose
 from geometry_msgs.msg import PoseArray
 from std_msgs.msg import Header
+from std_msgs.msg import *
 import math
-from std_msgs.msg import Float64
 
 # Edited on Dec 1 2016 by JJ
 # fixed altitude not being a float issue
@@ -16,8 +16,7 @@ class CircleDetect():
 
     def __init__(self):
         # Create a publisher for acceleration data
-        self.pub = rospy.Publisher('/roomba/location_meters', PoseArray,
-            queue_size=10)
+        self.pub = rospy.Publisher('/roomba/location_meters', PoseArray, queue_size=10)
         self.rate = rospy.Rate(10)  # 10hz
         # For finding radius
         self.a = 391.3
@@ -38,7 +37,7 @@ class CircleDetect():
     def loop_search(self):
         while not rospy.is_shutdown():
             # Uncomment for actual flight to find altitude
-            rospy.Subscriber("/mavros/global_position/rel_alt", Float64, self.callback)
+            #rospy.Subscriber("mavros/altitude",Altitude,self.altitude_callback)
 
             # read frame from capture
             ret, img = self.cap.read()
@@ -76,8 +75,12 @@ class CircleDetect():
                     self.pose_array.append(self.temp_pose)
 
             self.header.seq += 1
-            self.header.stamp = rospy.get_time()
+            #self.header.stamp = rospy.get_time()
+            time = rospy.Time.now()
+            self.header.stamp.secs = int(time.to_sec())
+            self.header.stamp.nsecs = int((time.to_sec() - int(time.to_sec())) * 1000000000)
             roomba_locations = PoseArray( self.header,self.pose_array)
+            print(roomba_locations)
 
             #########################
             # show the output image #
@@ -101,8 +104,21 @@ class CircleDetect():
         cv2.destroyAllWindows()
         self.cap.release()
 
-    def callback(self, altitude):
-        self.alt = float(altitude)
+    def altitude_callback(self, data):
+        IncomingData = [0,0,0,0,0]
+        IncomingData[0] = data.monotonic
+        IncomingData[1] = data.amsl
+        IncomingData[2] = data.relative
+        IncomingData[3] = data.terrain
+        IncomingData[4] = data.bottom_clearance
+
+        if IncomingData[2] > 0.3 and IncomingData[2] < 20:
+            self.alt = ( IncomingData[2] )
+
+        else:
+            self.alt = ( IncomingData[1] - IncomingData[3] )
+
+        return
 
 if __name__ == '__main__':
     # Initiate the node

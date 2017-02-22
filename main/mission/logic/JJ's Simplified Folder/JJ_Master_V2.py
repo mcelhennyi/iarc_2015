@@ -51,7 +51,7 @@ class Master():
         rospy.Subscriber("mavros/local_position/velocity",  TwistStamped,   self.local_position_velocity_callback)
         rospy.Subscriber("mavros/altitude",                 Altitude,       self.altitude_callback)
         rospy.Subscriber("/mavros/state",                   State,          self.state_callback)
-        rospy.Subscriber("  ",                              PoseArray,  self.roomba_location_callback)
+        rospy.Subscriber("/roomba/location_meters",         PoseArray,      self.roomba_location_callback)
         ################
 
         ################ publisher objects and variables
@@ -303,7 +303,8 @@ class Master():
     ###################################
 
     ###################################
-    def roomba_location_callback(self, location):
+    def roomba_location_callback(self, roomba_location_pose_arrary):
+        for pose in roomba_location_pose_arrary.Pose
 
 
     ###################################
